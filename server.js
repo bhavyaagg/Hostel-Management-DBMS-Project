@@ -57,3 +57,9 @@ app.post('/addstaff',function (req,res) {
 
 })
 
+
+app.use(express.static(__dirname + '/public'));
+
+app.listen(8888, () => {
+  console.log("Server Listening on port 8888");
+})
