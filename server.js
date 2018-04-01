@@ -4,11 +4,9 @@
 
 const express = require('express');
 const app = express();
-const bodyparser = require('body-parser');
-const path = require('path')
 
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.use('/api', require('./routes/index'));
 
