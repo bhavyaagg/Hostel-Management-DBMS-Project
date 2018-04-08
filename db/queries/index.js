@@ -3,5 +3,8 @@
  */
 
 module.exports = {
-  hostel: require('./hostel')
+  application: require('./application'),
+  applicant: require('./applicant'),
+  hostel: require('./hostel'),
+  staff: require('./staff')
 }

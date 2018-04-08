@@ -13,9 +13,9 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 db.query(queries.hostel.createTable).then((data) => {
-  db.query(queries.hostel.createTableApplicant).then((data) => {
-    db.query(queries.hostel.createTableApplication).then((data) => {
-      db.query(queries.hostel.createTableStaff).then((data) => {
+  db.query(queries.applicant.createTable).then((data) => {
+    db.query(queries.application.createTable).then((data) => {
+      db.query(queries.staff.createTable).then((data) => {
 
       })
     })
@@ -25,7 +25,7 @@ db.query(queries.hostel.createTable).then((data) => {
 });
 
 
-db.sync({force: false}).then(() => {
+db.sync({force: true}).then(() => {
   console.log("Database Configured");
 })
 
