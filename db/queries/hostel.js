@@ -11,6 +11,11 @@ const createTable = `
   );
 `
 
+const dropTable = `
+  DROP TABLE hostel;
+`
+
 module.exports = {
-  createTable
+  createTable,
+  dropTable
 }

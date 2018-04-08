@@ -13,6 +13,11 @@ const createTable = `CREATE TABLE IF NOT EXISTS staff(
 
 `
 
+const dropTable = `
+  DROP TABLE staff;
+`
+
 module.exports = {
-  createTable
+  createTable,
+  dropTable
 }

@@ -13,6 +13,11 @@ const createTable = `
   );
 `
 
+const dropTable = `
+  DROP TABLE application;
+`
+
 module.exports = {
-  createTable
+  createTable,
+  dropTable
 }

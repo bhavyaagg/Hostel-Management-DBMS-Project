@@ -8,9 +8,13 @@ const createTable = `
     name varchar(30) NOT NULL,
     PRIMARY KEY (rollNo) 
   );
+`
 
+const dropTable = `
+  DROP TABLE applicant;
 `
 
 module.exports = {
-  createTable
+  createTable,
+  dropTable
 }
