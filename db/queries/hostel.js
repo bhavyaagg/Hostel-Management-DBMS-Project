@@ -5,9 +5,9 @@
 const createTable = `
   CREATE TABLE IF NOT EXISTS hostel(
     hid int NOT NULL,
-    name varchar(30),
-    capacity int check(capacity<100),
-    PRIMARY KEY (hid)    
+    name varchar(30) NOT NULL,
+    capacity int check(capacity>0 AND capacity<=1000),
+    PRIMARY KEY (hid)
   );
 `
 
