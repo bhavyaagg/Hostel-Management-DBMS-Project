@@ -4,9 +4,9 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS applicant(
-    rollNo int,
-    name varchar(30),
-    PRIMARY KEY (rollNo)    
+    rollNo int check(rollNo > 0),
+    name varchar(30) NOT NULL,
+    PRIMARY KEY (rollNo) 
   );
 
 `
