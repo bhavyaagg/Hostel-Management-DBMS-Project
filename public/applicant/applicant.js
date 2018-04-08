@@ -9,7 +9,7 @@ $(function () {
         console.log($('#name').val())
         console.log($('#rno').val())
 
-        $.post('/addapplicant',
+        $.post('/api/applicant/add',
             {   name : $('#name').val(),
                 rno : $('#rno').val()},
             function (data) {

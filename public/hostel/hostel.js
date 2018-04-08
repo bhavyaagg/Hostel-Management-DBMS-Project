@@ -4,20 +4,33 @@
 
 $(function () {
 
-    $('#addhostel').click(function () {
+  $('#addhostel').click(function () {
 
-        console.log($('#hid').val())
-        console.log($('#name').val())
-        console.log($('#capacity').val())
+    console.log($('#hid').val())
+    console.log($('#name').val())
+    console.log($('#capacity').val())
 
-        $.post('/addhostel',
-            {hid : $('#hid').val(),
-                name : $('#name').val(),
-                capacity : $('#capacity').val()},
-            function (data) {
-                console.log(data);
-            })
+    $.post('/api/hostel/add',
+      {
+        hid: $('#hid').val(),
+        name: $('#name').val(),
+        capacity: $('#capacity').val()
+      },
+      function (data) {
+        console.log(data);
+      })
 
+  })
+
+  $('#viewAllHostels').click(function () {
+    $.get('/api/hostel/viewAll', function (data) {
+      $('#listHostels').empty()
+
+      data.forEach((hostel) => {
+        console.log(hostel);
+        $('#listHostels').append(`<li>hid: ${hostel.hid} | name: ${hostel.name} | capacity: ${hostel.capacity}</li>`)
+      })
     })
+  })
 
 });

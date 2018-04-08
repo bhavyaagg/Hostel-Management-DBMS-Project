@@ -4,6 +4,7 @@
 
 const express = require('express')
 const route = express.Router();
+const db = require('../db/models');
 
 route.post('/add', function (req, res) {
 
@@ -11,6 +12,13 @@ route.post('/add', function (req, res) {
   console.log(req.body.status);
   console.log(req.body.rno);
   console.log(req.body.aid);
+  db.query(`INSERT INTO application values(${req.body.aid},'${req.body.date}','${req.body.status}',${req.body.rno})`).then((data) => {
+    console.log(data)
+    res.send("Application added");
+  }).catch((err) => {
+    console.log(err);
+    res.send(err);
+  })
 
 })
 

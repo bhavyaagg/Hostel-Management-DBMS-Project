@@ -5,7 +5,7 @@ module.exports = {
   "DB": "hostel",
   "USER": "hostel",
   "PASSWORD": "hostel",
-  "DIALECT": "mysql",
+  "DIALECT": "postgres",
   "HOST": "localhost",
-  "PORT": "3306"
+  "PORT": "5432"
 }

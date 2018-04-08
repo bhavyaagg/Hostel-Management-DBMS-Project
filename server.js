@@ -4,7 +4,7 @@
 
 const express = require('express');
 const app = express();
-
+const db = require('./db/models');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

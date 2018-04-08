@@ -4,6 +4,8 @@
 
 const Sequelize = require('sequelize');
 const dbConfig = require('./dbConfig');
+const utils = require('./utils');
+const queries = require('./queries/index');
 const DataTypes = Sequelize.DataTypes;
 
 const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -12,16 +14,29 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   port: dbConfig.PORT
 });
 
-const hostel = db.define('hostel', {
-  a: {
-    type: DataTypes.INTEGER,
-    validate: {
-      min: 5,
-      max: 10
-    }
-  }
-})
+db.query(queries.hostel.createTable).then((data) => {
+  // console.log(data);
 
-db.sync({}, () => {
+  // db.query(utils.changeDelimiter('//')).then((data) => {
+  //   console.log("------")
+  //   console.log(data)
+  // });
+
+
+  db.query(queries.hostel.createTableApplicant).then((data) => {
+    db.query(queries.hostel.createTableApplication).then((data) => {
+      db.query(queries.hostel.createTableStaff).then((data) => {
+
+      })
+    })
+  })
+
+
+});
+
+
+db.sync({force: false}).then(() => {
   console.log("Database Configured");
 })
+
+module.exports = db;

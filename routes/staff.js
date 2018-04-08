@@ -4,6 +4,7 @@
 
 const express = require('express')
 const route = express.Router();
+const db = require('../db/models');
 
 route.post('/add', function (req, res) {
 
@@ -11,6 +12,14 @@ route.post('/add', function (req, res) {
   console.log(req.body.sid);
   console.log(req.body.tenure);
   console.log(req.body.salary);
+
+  db.query(`INSERT INTO staff values(${req.body.sid},${req.body.hid},${req.body.tenure},${req.body.salary})`).then((data) => {
+    console.log(data)
+    res.send("Staff added");
+  }).catch((err) => {
+    console.log(err);
+    res.send(err);
+  })
 
 })
 

@@ -11,7 +11,7 @@ $(function () {
         console.log($('#tenure').val())
         console.log($('#salary').val())
 
-        $.post('/addstaff',
+        $.post('/api/staff/add',
             {   hid : $('#hid').val(),
                 sid : $('#sid').val(),
                 tenure : $('#tenure').val(),
