@@ -10,6 +10,7 @@ db.query(queries.staff.dropTable).then((data) => {
     db.query(queries.applicant.dropTable).then((data) => {
       db.query(queries.hostel.dropTable).then((data) => {
         console.log("All tables Dropped");
+        process.exit();
       })
     })
   })
