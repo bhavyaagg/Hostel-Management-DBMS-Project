@@ -26,7 +26,7 @@ $(function () {
 
       data.forEach((applicant) => {
         console.log(applicant);
-        $('#listApplicants').append(`<li>Name: ${applicant.name} | RollNo: ${applicant.rollNo}</li>`)
+        $('#listApplicants').append(`<li>Name: ${applicant.name} | RollNo: ${applicant.rollno}</li>`)
       })
     })
   })

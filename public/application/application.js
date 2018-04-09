@@ -34,9 +34,9 @@ $(function () {
         console.log(application);
         $('#listApplications').append(`<li>
           Application ID: ${application.aid} |
-          Date Submitted: ${application.dateSubmitted} |
+          Date Submitted: ${application.datesubmitted} |
           Status: ${application.status} |
-          Student Roll No: ${application.rollNo}
+          Student Roll No: ${application.rollno}
         </li>`)
       })
     })
