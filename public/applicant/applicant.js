@@ -4,18 +4,31 @@
 
 $(function () {
 
-    $('#add_applicant').click(function () {
+  $('#add_applicant').click(function () {
 
-        console.log($('#name').val())
-        console.log($('#rno').val())
+    console.log($('#name').val())
+    console.log($('#rno').val())
 
-        $.post('/api/applicant/add',
-            {   name : $('#name').val(),
-                rno : $('#rno').val()},
-            function (data) {
-                console.log(data);
-            })
+    $.post('/api/applicant/add',
+      {
+        name: $('#name').val(),
+        rno: $('#rno').val()
+      },
+      function (data) {
+        console.log(data);
+      })
 
+  })
+
+  $('#viewAllApplicants').click(function () {
+    $.get('/api/applicant/viewAll', function (data) {
+      $('#listApplicants').empty()
+
+      data.forEach((applicant) => {
+        console.log(applicant);
+        $('#listApplicants').append(`<li>Name: ${applicant.name} | RollNo: ${applicant.rollNo}</li>`)
+      })
     })
+  })
 
 })

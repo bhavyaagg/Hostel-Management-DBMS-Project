@@ -25,4 +25,21 @@ $(function () {
 
   })
 
+
+  $('#viewAllApplications').click(function () {
+    $.get('/api/application/viewAll', function (data) {
+      $('#listApplications').empty()
+
+      data.forEach((application) => {
+        console.log(application);
+        $('#listApplications').append(`<li>
+          Application ID: ${application.aid} |
+          Date Submitted: ${application.dateSubmitted} |
+          Status: ${application.status} |
+          Student Roll No: ${application.rollNo}
+        </li>`)
+      })
+    })
+  })
+
 })
