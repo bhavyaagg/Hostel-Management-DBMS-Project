@@ -13,7 +13,7 @@ route.post('/add', function (req, res) {
   console.log(req.body.tenure);
   console.log(req.body.salary);
 
-  db.query(`INSERT INTO staff values(${req.body.sid},${req.body.hid},${req.body.tenure},${req.body.salary})`).then((data) => {
+  db.query(`INSERT INTO staff values(${req.body.sid},'${req.body.name}',${req.body.tenure},${req.body.salary},${req.body.hid})`).then((data) => {
     console.log(data)
     res.send("Staff added");
   }).catch((err) => {
