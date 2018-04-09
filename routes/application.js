@@ -22,4 +22,13 @@ route.post('/add', function (req, res) {
 
 })
 
+
+route.get('/viewAll', (req, res) => {
+  db.query("SELECT * FROM application;").then((applications) => {
+    console.log(applications)
+    res.send(applications[0])
+  })
+})
+
+
 module.exports = route;

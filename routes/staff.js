@@ -24,4 +24,12 @@ route.post('/add', function (req, res) {
 })
 
 
+route.get('/viewAll', (req, res) => {
+  db.query("SELECT * FROM staff;").then((staffs) => {
+    console.log(staffs)
+    res.send(staffs[0])
+  })
+})
+
+
 module.exports = route;

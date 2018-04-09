@@ -20,4 +20,13 @@ route.post('/add', function (req, res) {
   })
 })
 
+
+route.get('/viewAll', (req, res) => {
+  db.query("SELECT * FROM applicant;").then((applicants) => {
+    console.log(applicants)
+    res.send(applicants[0])
+  })
+})
+
+
 module.exports = route;
