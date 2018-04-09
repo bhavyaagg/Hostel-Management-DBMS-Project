@@ -14,7 +14,7 @@ const createTable = `
 `
 
 const dropTable = `
-  DROP TABLE application;
+  DROP TABLE IF EXISTS application;
 `
 
 module.exports = {

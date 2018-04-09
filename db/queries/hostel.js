@@ -12,7 +12,7 @@ const createTable = `
 `
 
 const dropTable = `
-  DROP TABLE hostel;
+  DROP TABLE IF EXISTS hostel;
 `
 
 module.exports = {
