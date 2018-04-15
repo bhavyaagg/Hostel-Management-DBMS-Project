@@ -9,7 +9,7 @@ const createTable = `
     status varchar(20),
     rollNo int,
     PRIMARY KEY (aid),
-    FOREIGN KEY (rollNo) references applicant(rollNo)  
+    FOREIGN KEY (rollNo) REFERENCES applicant(rollNo)  
   );
 `
 
