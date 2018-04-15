@@ -3,15 +3,15 @@
  */
 
 const createTable = `
-  CREATE TABLE IF NOT EXISTS emergencyItems(
+  CREATE TABLE IF NOT EXISTS emergencyitems(
     emid serial PRIMARY KEY,
     name varchar(30) NOT NULL,
-    description varchar(1234), 
+    description varchar(1234) 
   );
 `
 
 const dropTable = `
-  DROP TABLE IF EXISTS emergencyItems;
+  DROP TABLE IF EXISTS emergencyitems;
 `
 
 module.exports = {
