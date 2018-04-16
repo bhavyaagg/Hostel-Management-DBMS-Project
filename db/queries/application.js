@@ -13,11 +13,23 @@ const createTable = `
   );
 `
 
+const insertIntoTable = (aid, date, status, rno) => {
+  return `
+    INSERT INTO application values(${aid},'${date}','${status}',${rno});
+  `
+}
+
+const selectAll = `
+  SELECT * FROM application;
+`
+
 const dropTable = `
   DROP TABLE IF EXISTS application;
 `
 
 module.exports = {
   createTable,
+  insertIntoTable,
+  selectAll,
   dropTable
 }

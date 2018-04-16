@@ -5,29 +5,20 @@
 const express = require('express')
 const route = express.Router();
 const db = require('../db/models');
+const applicationQueries = require('../db/queries/application');
+const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-
-  console.log(req.body.date);
-  console.log(req.body.status);
-  console.log(req.body.rno);
-  console.log(req.body.aid);
-  db.query(`INSERT INTO application values(${req.body.aid},'${req.body.date}','${req.body.status}',${req.body.rno})`).then((data) => {
-    console.log(data)
+  db.query(applicationQueries.insertIntoTable(req.body.aid, req.body.date, req.body.status, req.body.rno)).then((data) => {
     res.send("Application added");
-  }).catch((err) => {
-    console.log(err);
-    res.send(err);
-  })
-
+  }).catch(utils.errorFunction);
 })
 
 
 route.get('/viewAll', (req, res) => {
-  db.query("SELECT * FROM application;").then((applications) => {
-    console.log(applications)
+  db.query(applicationQueries.selectAll).then((applications) => {
     res.send(applications[0])
-  })
+  }).catch(utils.errorFunction);
 })
 
 
