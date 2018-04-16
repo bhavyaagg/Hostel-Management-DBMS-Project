@@ -10,11 +10,23 @@ const createTable = `
   );
 `
 
+const insertIntoTable = (name, capacity) => {
+  return `
+    INSERT INTO hostel(name, capacity) values('${name}',${capacity});
+  `
+}
+
+const selectAll = `
+  SELECT * FROM hostel;
+`
+
 const dropTable = `
   DROP TABLE IF EXISTS hostel CASCADE;
 `
 
 module.exports = {
   createTable,
+  insertIntoTable,
+  selectAll,
   dropTable
 }
