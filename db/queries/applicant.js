@@ -11,11 +11,23 @@ const createTable = `
   );
 `
 
+const insertIntoTable = (rno, name) => {
+  return `
+    INSERT INTO applicant values(${rno},'${name}');
+  `
+}
+
+const selectAll = `
+  SELECT * FROM applicant;
+`
+
 const dropTable = `
   DROP TABLE IF EXISTS applicant;
 `
 
 module.exports = {
   createTable,
+  insertIntoTable,
+  selectAll,
   dropTable
 }
