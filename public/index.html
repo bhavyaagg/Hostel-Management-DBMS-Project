@@ -3,17 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Hostel Management System</title>
-  <link rel="stylesheet" href="./css/index.css">
-  <script src="./js/jquery-3.3.1.js"></script>
-  <script src="hostel/hostel.js"></script>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
 </head>
 <body>
 
 
-<input id="hid" placeholder="Enter hostel id">
-<input id="name" placeholder="Enter name">
-<input id="capacity" placeholder="Enter capacity">
-<button id="addhostel">add hostel</button>
+<div class="container">
+  <div class="row mt-3 mb-5">
+    <div class="col">
+      <h1 class="text-center">
+        Hostel Database Management System
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-center">
+      <a class="btn btn-success" href="/hostel">Hostel</a>
+      <a class="btn btn-success" href="/applicant">Applicant</a>
+      <a class="btn btn-success" href="/application">Application</a>
+      <a class="btn btn-success" href="/staff">Staff</a>
+
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>

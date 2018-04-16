@@ -5,6 +5,7 @@
 $(function () {
 
   $('#addHostelBtn').click(() => {
+    $('#listHostels').empty()
     $('#addHostelDiv').css("display", "block");
   })
 
@@ -21,7 +22,8 @@ $(function () {
 
   })
 
-  $('#viewAllHostels').click(function () {
+  $('#viewAllHostelsBtn').click(function () {
+    $('#addHostelDiv').css("display", "none");
     $.get('/api/hostel/viewAll', function (data) {
       $('#listHostels').empty()
 
