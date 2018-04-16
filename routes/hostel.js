@@ -9,15 +9,9 @@ const hostelQueries = require('../db/queries/hostel');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-  console.log(req.body.hid);
-  console.log(req.body.name);
-  console.log(req.body.capacity);
-
   db.query(hostelQueries.insertIntoTable(req.body.name, req.body.capacity)).then((data) => {
-    console.log(data)
     res.send("Hostel added");
   }).catch(utils.errorFunction);
-
 })
 
 route.get('/viewAll', (req, res) => {
