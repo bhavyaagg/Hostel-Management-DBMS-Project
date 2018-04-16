@@ -14,11 +14,23 @@ const createTable = `CREATE TABLE IF NOT EXISTS staff(
 
 `
 
+const insertIntoTable = (sid, name, tenure, salary, hid) => {
+  return `
+    INSERT INTO staff values(${sid},'${name}',${tenure},${salary},${hid});
+  `
+}
+
+const selectAll = `
+  SELECT * FROM staff;
+`
+
 const dropTable = `
   DROP TABLE IF EXISTS staff;
 `
 
 module.exports = {
   createTable,
+  insertIntoTable,
+  selectAll,
   dropTable
 }

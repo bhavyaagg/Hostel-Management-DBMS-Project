@@ -5,30 +5,21 @@
 const express = require('express')
 const route = express.Router();
 const db = require('../db/models');
+const staffQueries = require('../db/queries/staff');
+const utils = require('../utils');
 
 route.post('/add', function (req, res) {
 
-  console.log(req.body.hid);
-  console.log(req.body.sid);
-  console.log(req.body.tenure);
-  console.log(req.body.salary);
-
-  db.query(`INSERT INTO staff values(${req.body.sid},'${req.body.name}',${req.body.tenure},${req.body.salary},${req.body.hid})`).then((data) => {
-    console.log(data)
+  db.query(staffQueries.insertIntoTable(req.body.sid, req.body.name, req.body.tenure, req.body.salary, req.body.hid)).then((data) => {
     res.send("Staff added");
-  }).catch((err) => {
-    console.log(err);
-    res.send(err);
-  })
-
+  }).catch(utils.errorFunction)
 })
 
 
 route.get('/viewAll', (req, res) => {
-  db.query("SELECT * FROM staff;").then((staffs) => {
-    console.log(staffs)
+  db.query(staffQueries.selectAll).then((staffs) => {
     res.send(staffs[0])
-  })
+  }).catch(utils.errorFunction)
 })
 
 
