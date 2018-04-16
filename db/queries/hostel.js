@@ -11,7 +11,7 @@ const createTable = `
 `
 
 const dropTable = `
-  DROP TABLE IF EXISTS hostel;
+  DROP TABLE IF EXISTS hostel CASCADE;
 `
 
 module.exports = {

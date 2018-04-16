@@ -11,7 +11,7 @@ route.post('/add', function (req, res) {
   console.log(req.body.name);
   console.log(req.body.capacity);
 
-  db.query(`INSERT INTO hostel values(${req.body.hid},'${req.body.name}',${req.body.capacity})`).then((data) => {
+  db.query(`INSERT INTO hostel(name, capacity) values('${req.body.name}',${req.body.capacity})`).then((data) => {
     console.log(data)
     res.send("Hostel added");
   }).catch((err) => {

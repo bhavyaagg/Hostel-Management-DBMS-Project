@@ -4,15 +4,14 @@
 
 $(function () {
 
-  $('#addhostel').click(function () {
+  $('#addHostelBtn').click(() => {
+    $('#addHostelDiv').css("display", "block");
+  })
 
-    console.log($('#hid').val())
-    console.log($('#name').val())
-    console.log($('#capacity').val())
+  $('#submitHostelBtn').click(function () {
 
     $.post('/api/hostel/add',
       {
-        hid: $('#hid').val(),
         name: $('#name').val(),
         capacity: $('#capacity').val()
       },
