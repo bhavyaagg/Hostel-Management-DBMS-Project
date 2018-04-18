@@ -1,0 +1,23 @@
+.titlerow {
+    /*background-color: white;*/
+    height: auto;
+    padding: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+    /*box-shadow: #DDD 0 0 8px 1px ;*/
+    /*border-radius: .125rem;*/
+}
+
+a {
+    cursor: pointer;
+}
+
+.form-control {
+    display: inline-block !important;
+}
+
+.sideButtons {
+    width: 170px;
+    border-radius: 2rem;
+    margin: 5px
+}
