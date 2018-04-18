@@ -21,3 +21,36 @@ a {
     border-radius: 2rem;
     margin: 5px
 }
+
+.addButtons {
+    padding: 5px 15px;
+    font-size: 14px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.customModalHeader {
+    border: none;
+    background-color: #02B3E4;
+    counter-reset: white;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.customModalTitle {
+    margin: 0 auto;
+    font-size: 18px;
+    color: white
+}
+
+.customLabel {
+    color: #777;
+    font-size: 1rem;
+    display: inline-block
+}
+
+.customFooter {
+    border: none;
+    justify-content: center;
+    padding-top: 5px
+}
