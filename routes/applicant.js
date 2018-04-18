@@ -15,14 +15,14 @@ route.post('/add', function (req, res) {
 
   db.query(applicantQueries.insertIntoTable(req.body.rno, req.body.name)).then((data) => {
     res.send("Applicant added");
-  }).catch(utils.errorFunction);
+  }).catch(utils.errorFunction(req, res));
 })
 
 
 route.get('/viewAll', (req, res) => {
   db.query(applicantQueries.selectAll).then((applicants) => {
     res.send(applicants[0])
-  }).catch(utils.errorFunction);
+  }).catch(utils.errorFunction(req, res));
 })
 
 

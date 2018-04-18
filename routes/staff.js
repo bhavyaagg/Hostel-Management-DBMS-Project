@@ -11,14 +11,14 @@ const utils = require('../utils');
 route.post('/add', function (req, res) {
   db.query(staffQueries.insertIntoTable(req.body.sid, req.body.name, req.body.tenure, req.body.salary, req.body.hid)).then((data) => {
     res.send("Staff added");
-  }).catch(utils.errorFunction)
+  }).catch(utils.errorFunction(req, res))
 })
 
 
 route.get('/viewAll', (req, res) => {
   db.query(staffQueries.selectAll).then((staffs) => {
     res.send(staffs[0])
-  }).catch(utils.errorFunction)
+  }).catch(utils.errorFunction(req, res))
 })
 
 
