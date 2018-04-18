@@ -4,10 +4,28 @@
 
 $(function () {
 
-  $('#addHostelBtn').click(() => {
-    $('#listHostels').empty()
-    $('#addHostelDiv').css("display", "block");
+  $.get('/api/hostel/viewAll', function (hostels) {
+
+    let hostelsList = $('#hostelsList');
+
+    for (let i = 0; i < hostels.length; i++) {
+
+      hostelsList.append(`<li class="list-group-item">
+        <div class="row text-center">
+        <div class="col-3">${hostels[i].name}</div>
+        <div class="col-6">${hostels[i].capacity}</div>
+      <div class="col-3">
+        E/X
+        </div>
+        </div>
+        </li>`)
+    }
   })
+
+  // $('#addHostelBtn').click(() => {
+  //   $('#listHostels').empty()
+  //   $('#addHostelDiv').css("display", "block");
+  // })
 
   $('#submitHostelBtn').click(function () {
 
@@ -16,22 +34,28 @@ $(function () {
         name: $('#name').val(),
         capacity: $('#capacity').val()
       },
-      function (data) {
-        console.log(data);
+      function (response) {
+        if (response.success) {
+          $('#addHostelModal').modal('hide');
+          window.location.reload();
+        }
+        else {
+          console.log("could not add the hostel right now")
+        }
       })
 
   })
 
-  $('#viewAllHostelsBtn').click(function () {
-    $('#addHostelDiv').css("display", "none");
-    $.get('/api/hostel/viewAll', function (data) {
-      $('#listHostels').empty()
-
-      data.forEach((hostel) => {
-        console.log(hostel);
-        $('#listHostels').append(`<li>hid: ${hostel.hid} | name: ${hostel.name} | capacity: ${hostel.capacity}</li>`)
-      })
-    })
-  })
+  // $('#viewAllHostelsBtn').click(function () {
+  //   $('#addHostelDiv').css("display", "none");
+  //   $.get('/api/hostel/viewAll', function (data) {
+  //     $('#listHostels').empty()
+  //
+  //     data.forEach((hostel) => {
+  //       console.log(hostel);
+  //       $('#listHostels').append(`<li>hid: ${hostel.hid} | name: ${hostel.name} | capacity: ${hostel.capacity}</li>`)
+  //     })
+  //   })
+  // })
 
 });

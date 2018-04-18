@@ -17,7 +17,10 @@ route.post('/add', function (req, res) {
 route.get('/viewAll', (req, res) => {
   db.query(hostelQueries.selectAll).then((hostels) => {
     console.log(hostels)
-    res.send(hostels[0])
+    res.send({
+      success: true,
+      data: hostels[0]
+    })
   }).catch(utils.errorFunction(req, res));
 })
 
