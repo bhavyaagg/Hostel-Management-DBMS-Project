@@ -10,7 +10,9 @@ const utils = require('../utils');
 
 route.post('/add', function (req, res) {
   db.query(hostelQueries.insertIntoTable(req.body.name, req.body.capacity)).then((data) => {
-    res.send("Hostel added");
+    res.send({
+      success: true
+    });
   }).catch(utils.errorFunction(req, res));
 })
 

@@ -4,13 +4,15 @@
 
 $(function () {
 
-  $.get('/api/hostel/viewAll', function (hostels) {
+  $.get('/api/hostel/viewAll', function (response) {
+    if (response.success) {
+      let hostels = response.data;
 
-    let hostelsList = $('#hostelsList');
+      let hostelsList = $('#hostelsList');
 
-    for (let i = 0; i < hostels.length; i++) {
+      for (let i = 0; i < hostels.length; i++) {
 
-      hostelsList.append(`<li class="list-group-item">
+        hostelsList.append(`<li class="list-group-item">
         <div class="row text-center">
         <div class="col-3">${hostels[i].name}</div>
         <div class="col-6">${hostels[i].capacity}</div>
@@ -19,6 +21,7 @@ $(function () {
         </div>
         </div>
         </li>`)
+      }
     }
   })
 
