@@ -10,18 +10,20 @@ const utils = require('../utils');
 
 route.post('/add', function (req, res) {
 
-  console.log(req.body.name);
-  console.log(req.body.rno);
-
-  db.query(applicantQueries.insertIntoTable(req.body.rno, req.body.name)).then((data) => {
-    res.send("Applicant added");
+  db.query(applicantQueries.insertIntoTable(req.body.rollno, req.body.name)).then((data) => {
+    res.send({
+      success: true
+    });
   }).catch(utils.errorFunction(req, res));
 })
 
 
 route.get('/viewAll', (req, res) => {
   db.query(applicantQueries.selectAll).then((applicants) => {
-    res.send(applicants[0])
+    res.send({
+      success: true,
+      data: applicants[0]
+    })
   }).catch(utils.errorFunction(req, res));
 })
 

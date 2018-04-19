@@ -11,9 +11,9 @@ const createTable = `
   );
 `
 
-const insertIntoTable = (rno, name) => {
+const insertIntoTable = (rollno, name) => {
   return `
-    INSERT INTO applicant values(${rno},'${name}');
+    INSERT INTO applicant values(${rollno},'${name}');
   `
 }
 

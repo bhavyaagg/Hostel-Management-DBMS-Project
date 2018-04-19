@@ -3,18 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <title>Hostel Management System</title>
-  <!--<link rel="stylesheet" href="./css/index.css">-->
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/index.css">
+  
   <script src="../js/jquery-3.3.1.js"></script>
-  <script src="./applicant.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  <script src="index.js"></script>
 </head>
 <body>
 
+<div class="modal fade" id="addApplicantModal" tabindex="-1" role="dialog" aria-labelledby="Add Applicant Modal"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header customModalHeader">
+        <h5 class="modal-title customModalTitle text-center" style="">Add Applicant</h5>
+        <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group mb-0" id="addHostelForm">
+          <label class="mr-2 customLabel" for="name">Applicant Name: </label>
+          <input id="name" required type="text" class="form-control mb-2"><br>
+          <label class="mr-2 customLabel" for="rollno">Applicant Roll Number: </label>
+          <input id="rollno" required type="text" class="form-control mb-2"><br>
+        </div>
+      </div>
+      <p class="text-center text-danger" id="addApplicantError"></p>
+      <div class="modal-footer customFooter">
+        <button id="submitApplicantBtn" class="btn btn-success addButtons">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<input id="name" placeholder="Enter name">
-<input id="rno" placeholder="Enter roll number">
-<button id="add_applicant">Add applicant</button>
 
-<button id="viewAllApplicants">View All</button>
-<ul id="listApplicants"></ul>
+
+<div class="container">
+  <div class="row pt-4 pl-4 pr-4">
+    <div class="col text-center text-capitalize">
+      <h1>Hostel Database Management System</h1>
+    </div>
+  </div>
+  <hr class="mt-0">
+  <div class="row p-4">
+    <div class="col-3">
+      <a href="/hostel" class="btn btn-outline-primary sideButtons">Hostel</a>
+      <a href="/applicant" class="btn btn-outline-primary sideButtons active">Applicant</a>
+      <a href="/application" class="btn btn-outline-primary sideButtons">Application</a>
+      <a href="/staff" class="btn btn-outline-primary sideButtons">Staff</a>
+      <br>
+    
+    </div>
+    <div class="col">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-6">
+            <h1 class="m-0" id="title">Applicants</h1>
+          </div>
+          <div class="col-sm-3 mt-auto mb-auto">
+            <button class="btn btn-primary addButtons" data-toggle="modal" data-target="#addApplicantModal">
+              Add Applicant
+            </button>
+          </div>
+        </div>
+        <div class="row p-5">
+          <ul id="applicantsList" class="list-group" style="width: 100%">
+            <li class="list-group-item">
+              <div class="row text-center">
+                <div class="col-3"><b>Roll Number</b></div>
+                <div class="col-6"><b>Name</b></div>
+                <div class="col-3">
+                  <b>Edit/Delete</b>
+                </div>
+              </div>
+            </li>
+          
+          </ul>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</div>
 </body>
 </html>
