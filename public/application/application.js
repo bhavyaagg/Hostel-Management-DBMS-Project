@@ -8,14 +8,14 @@ $(function () {
 
     console.log($('#date').val())
     console.log($('#status').val())
-    console.log($('#rno').val())
+    console.log($('#rollno').val())
     console.log($('#aid').val())
 
     $.post('/api/application/add',
       {
         date: $('#date').val(),
         status: $('#status').val(),
-        rno: $('#rno').val(),
+        rollno: $('#rollno').val(),
         aid: $('#aid').val()
 
       },

@@ -13,9 +13,9 @@ const createTable = `
   );
 `
 
-const insertIntoTable = (aid, date, status, rno) => {
+const insertIntoTable = (aid, date, status, rollno) => {
   return `
-    INSERT INTO application values(${aid},'${date}','${status}',${rno});
+    INSERT INTO application values(${aid},'${date}','${status}',${rollno});
   `
 }
 
