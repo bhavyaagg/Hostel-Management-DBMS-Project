@@ -4,7 +4,7 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS application(
-    aid int check(aid>0),
+    aid SERIAL,
     dateSubmitted date check(dateSubmitted>'2000-01-01' AND dateSubmitted <= now()),
     status varchar(20),
     rollNo int,
@@ -13,9 +13,9 @@ const createTable = `
   );
 `
 
-const insertIntoTable = (aid, date, status, rollno) => {
+const insertIntoTable = (date, status, rollno) => {
   return `
-    INSERT INTO application values(${aid},'${date}','${status}',${rollno});
+    INSERT INTO application values('${date}','${status}',${rollno});
   `
 }
 
