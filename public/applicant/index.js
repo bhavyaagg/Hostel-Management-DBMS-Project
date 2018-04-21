@@ -33,11 +33,11 @@ $(function () {
       },
       function (response) {
         if (response.success) {
-          $('#addHostelModal').modal('hide');
+          $('#addApplicantModal').modal('hide');
           window.location.reload();
         }
         else {
-          console.log("could not add the hostel right now")
+          console.log("could not add the applicant right now")
         }
       })
 
