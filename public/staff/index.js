@@ -26,11 +26,7 @@ $(function () {
   })
 
   $('#submitStaffBtn').click(function () {
-
-    console.log($('#selectHostelsList').val())
-    console.log($('#salary').val())
-    console.log($('#name').val())
-
+    
     $.post('/api/staff/add', {
         hid: $('#selectHostelsList').val(),
         salary: $('#salary').val(),
