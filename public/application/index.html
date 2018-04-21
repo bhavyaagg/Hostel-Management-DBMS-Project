@@ -1,23 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Hostel Management System</title>
-    <link rel="stylesheet" href="./css/index.css">
-    <script src="../js/jquery-3.3.1.js"></script>
-    <script src="./application.js"></script>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/jquery-ui.css">
+  <link rel="stylesheet" href="../css/index.css">
+  
+  <script src="../js/jquery-3.3.1.js"></script>
+  <script src="../js/jquery-ui.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  <script src="index.js"></script>
 </head>
 <body>
 
 
-<input id="date" placeholder="Enter date">
-<input id="status" placeholder="Enter status">
-<input id="rollno" placeholder="Enter rollno">
-<input id="aid" placeholder="Enter aid">
+<div class="modal fade" id="addApplicationModal" tabindex="-1" role="dialog" aria-labelledby="Add Application Modal"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header customModalHeader">
+        <h5 class="modal-title customModalTitle text-center" style="">Add Application</h5>
+        <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group mb-0" id="addApplicationForm">
+          <label class="mr-2 customLabel" for="rollno">Applicant Roll Number: </label>
+          <input id="rollno" required type="text" class="form-control mb-2"><br>
+          <label class="mr-2 customLabel" for="status">Status: </label>
+          <input id="status" required type="text" class="form-control mb-2"><br>
+          <label class="mr-2 customLabel" for="date">Date: </label><br/>
+          <input type="text" placeholder="dd-mm-yyyy" required id="date" class="form-control input"
+                 style="display: inline-block; width: auto;margin-bottom: 15px"><br>
+        </div>
+      </div>
+      <p class="text-center text-danger" id="addApplicationError"></p>
+      <div class="modal-footer customFooter">
+        <button id="submitApplicationBtn" class="btn btn-success addButtons">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<button id="add_application">add application</button>
+<div class="container">
+  <div class="row pt-4 pl-4 pr-4">
+    <div class="col text-center text-capitalize">
+      <h1>Hostel Database Management System</h1>
+    </div>
+  </div>
+  <hr class="mt-0">
+  <div class="row p-4">
+    <div class="col-3">
+      <a href="/hostel" class="btn btn-outline-primary sideButtons">Hostel</a>
+      <a href="/applicant" class="btn btn-outline-primary sideButtons">Applicant</a>
+      <a href="/application" class="btn btn-outline-primary sideButtons active">Application</a>
+      <a href="/staff" class="btn btn-outline-primary sideButtons">Staff</a>
+      <br>
+    
+    </div>
+    <div class="col">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-6">
+            <h1 class="m-0" id="title">Applications</h1>
+          </div>
+          <div class="col-sm-3 mt-auto mb-auto">
+            <button class="btn btn-primary addButtons" data-toggle="modal" data-target="#addApplicationModal">
+              Add Application
+            </button>
+          </div>
+        </div>
+        <div class="row p-5">
+          <ul id="applicationsList" class="list-group" style="width: 100%">
+            <li class="list-group-item">
+              <div class="row text-center">
+                <div class="col-3"><b>Applicant Roll Number</b></div>
+                <div class="col-3"><b>Status</b></div>
+                <div class="col-3"><b>Date</b></div>
+                <div class="col-3">
+                  <b>Edit/Delete</b>
+                </div>
+              </div>
+            </li>
+          
+          </ul>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</div>
 
-<button id="viewAllApplications">View All</button>
-<ul id="listApplications"></ul>
 </body>
 </html>

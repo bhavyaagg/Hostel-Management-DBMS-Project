@@ -15,7 +15,7 @@ const createTable = `
 
 const insertIntoTable = (date, status, rollno) => {
   return `
-    INSERT INTO application values('${date}','${status}',${rollno});
+    INSERT INTO application(dateSubmitted, status, rollNo) values('${date}','${status}',${rollno});
   `
 }
 
