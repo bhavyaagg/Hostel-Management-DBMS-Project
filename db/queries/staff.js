@@ -3,9 +3,8 @@
  */
 
 const createTable = `CREATE TABLE IF NOT EXISTS staff(
-    sid int check(sid>0),
+    sid SERIAL,
     name varchar(20) NOT NULL,
-    tenure int,
     salary int check(salary>0),
     hid int, 
     PRIMARY KEY (sid),
@@ -14,9 +13,9 @@ const createTable = `CREATE TABLE IF NOT EXISTS staff(
 
 `
 
-const insertIntoTable = (sid, name, tenure, salary, hid) => {
+const insertIntoTable = (name, salary, hid) => {
   return `
-    INSERT INTO staff values(${sid},'${name}',${tenure},${salary},${hid});
+    INSERT INTO staff(name, salary, hid) values('${name}',${salary},${hid});
   `
 }
 
