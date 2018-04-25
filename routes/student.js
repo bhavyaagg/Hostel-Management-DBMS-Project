@@ -31,8 +31,42 @@ route.post('/add', function (req, res) {
   }).catch(utils.errorFunction(req, res));
 })
 
-route.get('/mydetails', (req, res) => {``
-  if(!req.user){
+route.post('/update', function (req, res) {
+  if (!req.user) {
+    return res.status(401).send({
+      success: false,
+      error: "Unauthorized"
+    })
+  }
+  db.query(studentQueries.updateStudent(req.user.dataValues.username, req.body)).then((data) => {
+    if (req.user.dataValues.username === req.body.rollno) {
+      return res.send({
+        success: true
+      })
+    }
+    User.update({
+      username: req.body.rollno
+    }, {
+      where: {
+        username: req.user.dataValues.username
+      }
+    }).then(() => {
+      res.send({
+        success: true
+      });
+    }).catch((err) => {
+      console.log("Error")
+      res.status(500).send(
+        `Error in updating user
+      ${err.message}
+      `
+      )
+    })
+  }).catch(utils.errorFunction(req, res));
+})
+
+route.get('/mydetails', (req, res) => {
+  if (!req.user) {
     console.log("No User")
     return res.send({
       success: false,
@@ -44,7 +78,7 @@ route.get('/mydetails', (req, res) => {``
       success: true,
       data: data[0][0]
     })
-  }).catch(utils.errorFunction(req,res))
+  }).catch(utils.errorFunction(req, res))
 })
 
 route.get('/viewAll', (req, res) => {

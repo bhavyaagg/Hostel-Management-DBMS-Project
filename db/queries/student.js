@@ -36,6 +36,21 @@ const getDetails = (rollno) => {
   `
 }
 
+const updateStudent = (rollno, applicant) => {
+  return `
+    UPDATE student SET 
+    rollno='${applicant.rollno}',
+    name='${applicant.name}',
+    email='${applicant.email}',
+    contact='${applicant.contact}',
+    address='${applicant.address}',
+    pincode='${applicant.pincode}',
+    outsideDelhi='${applicant.outsideDelhi}',
+    pwd='${applicant.pwd}'
+    WHERE rollno='${rollno}';
+  `
+}
+
 const selectAll = `
   SELECT * FROM student;
 `
@@ -48,6 +63,7 @@ module.exports = {
   createTable,
   insertIntoTable,
   getDetails,
+  updateStudent,
   selectAll,
   dropTable
 }

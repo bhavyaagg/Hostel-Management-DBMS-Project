@@ -4,54 +4,15 @@
 
 $(function () {
 
-  // $.get('/api/student/viewAll', function (response) {
-  //   if (response.success) {
-  //     let students = response.data;
-  //
-  //     let studentsList = $('#studentsList');
-  //
-  //     for (let i = 0; i < students.length; i++) {
-  //
-  //       studentsList.append(`
-  //     <li class="list-group-item">
-  //       <div class="row text-center">
-  //         <div class="col-3">${students[i].rollno}</div>
-  //         <div class="col-6">${students[i].name}</div>
-  //         <div class="col-3">E/X</div>
-  //       </div>
-  //     </li>`)
-  //     }
-  //   }
-  // })
-
-  // $('#submitstudentBtn').click(function () {
-  //
-  //   $.post('/api/student/add',
-  //     {
-  //       name: $('#name').val(),
-  //       rollno: $('#rollno').val()
-  //     },
-  //     function (response) {
-  //       if (response.success) {
-  //         $('#addstudentModal').modal('hide');
-  //         window.location.reload();
-  //       }
-  //       else {
-  //         console.log("could not add the student right now")
-  //       }
-  //     })
-  //
-  // })
-
 
   $('#showStudentDetails').click(() => {
     $.get('/api/student/mydetails')
       .done((data) => {
         if (data.success) {
           let student = data.data;
+          let $noticeBoard = $('#noticeBoard');
 
-
-          $('#noticeBoard').css('display', 'block').empty().append(
+          $noticeBoard.css('display', 'block').empty().append(
             `
               <div class="row no-gutters">
                 <div class="col">
@@ -76,15 +37,116 @@ $(function () {
 
 
           $('#listDetails').append(`
-              <li class="list-group-item">${student.rollno}</li>
-              <li class="list-group-item">${student.name}</li>
-              <li class="list-group-item">${student.email}</li>
-              <li class="list-group-item">${student.contact}</li>
-              <li class="list-group-item">${student.address}</li>
-              <li class="list-group-item">${student.pincode}</li>
-              <li class="list-group-item">${student.outsidedelhi ? "Yes" : "No"}</li>
-              <li class="list-group-item">${student.pwd ? "Yes" : "No"}</li>
+              <li id="rollno" class="list-group-item item">${student.rollno}</li>
+              <li id="name" class="list-group-item item">${student.name}</li>
+              <li id="email" class="list-group-item item">${student.email}</li>
+              <li id="contact" class="list-group-item item">${student.contact}</li>
+              <li id="address" class="list-group-item item">${student.address}</li>
+              <li id="pincode" class="list-group-item item">${student.pincode}</li>
+              <li id="outsidedelhi" class="list-group-item item">${student.outsidedelhi ? "Yes" : "No"}</li>
+              <li id="pwd" class="list-group-item">${student.pwd ? "Yes" : "No"}</li>
           `)
+
+
+          $noticeBoard.append(`
+            <div id="updateStudentDiv" class="col text-center mt-3">
+              <button id="updateStudentDetails" class="btn btn-info">Update</button>
+              <div id="msgEditStudent"></div>
+            </div>
+          `)
+
+
+          $('#updateStudentDetails').click(() => {
+            $(".item").attr('contentEditable', 'true');
+            $('#updateStudentDiv').empty().append(`
+            <div id="updateStudentDiv" class="col text-center mt-3">
+              <button id="submitUpdateStudentDetails" class="btn btn-info">Submit</button>
+              <div id="msgEditStudent"></div>
+            </div>              
+            `)
+            $('#msgEditStudent').removeClass('text-danger').addClass('text-success').text("You can edit the fields")
+            $('#submitUpdateStudentDetails').click(() => {
+
+              let name = $('#name')[0].innerText;
+              let email = $('#email')[0].innerText;
+              let rollno = $('#rollno')[0].innerText;
+              let contact = $('#contact')[0].innerText;
+              let address = $('#address')[0].innerText;
+              let pincode = $('#pincode')[0].innerText;
+              let outsideDelhi = $('#outsidedelhi')[0].innerText;
+              let pwd = $('#pwd')[0].innerText
+              let $msg = $('#msgEditStudent').removeClass('text-success').addClass('text-success');
+              if (!name || name.length === 0 || name[0].toLowerCase() === name[0].toUpperCase()) {
+                console.log(name)
+                $msg.text("Please Enter Valid Name");
+                return;
+              }
+
+              if (!email || email.length === 0 || !validateEmail(email)) {
+                $msg.text("Please Enter Valid Email");
+                return;
+              }
+
+              if (!rollno || rollno.length <= 6 || rollno.length > 7) {
+                $msg.text("Incorrect Roll Number");
+                return;
+              }
+
+              if (!contact || contact.length < 10 || contact.length > 10) {
+                $msg.text("Please enter correct Mobile Number");
+                return;
+              }
+
+              if (!address || address.length === 0) {
+                $msg.text("Please Enter correct Address");
+                return;
+              }
+
+              if (!pincode || pincode.length < 6 || pincode.length > 6) {
+                $msg.text("Please Enter correct Pincode");
+                return;
+              }
+
+              if (!outsideDelhi || !(outsideDelhi.toLowerCase() === 'no' || outsideDelhi.toLowerCase() === 'yes')) {
+                $msg.text("Please Select The Outside Delhi Option(Yes/No)");
+                return;
+              }
+
+              if (!pwd || !(pwd.toLowerCase() === 'no' || pwd.toLowerCase() === 'yes')) {
+                $msg.text("Please Select The PWD Option(Yes/No)");
+                return;
+              }
+
+              $.post("/api/student/update", {
+                name,
+                email,
+                rollno,
+                contact,
+                address,
+                pincode,
+                outsideDelhi,
+                pwd
+              }).done(function (student) {
+                if (student.success) {
+                  window.location.reload();
+
+                } else {
+                  console.log(2)
+                  console.log(student.error);
+                  $('#errorRegister').text("Eroorr")
+                }
+              }).fail(function (student) {
+                console.log(student.responseJSON)
+                if (student.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                  $('#errorRegister').text(`${student.responseJSON.error.errors[0].type}! ${student.responseJSON.error.errors[0].message}`)
+                } else {
+                  $('#errorRegister').text('Other Error');
+                }
+              });
+
+
+            })
+          })
         } else {
           console.log("Some errrorrr")
         }
@@ -116,15 +178,67 @@ $(function () {
       })
   })
 
-  // $('#viewAllstudents').click(function () {
-  //   $.get('/api/student/viewAll', function (data) {
-  //     $('#liststudents').empty()
-  //
-  //     data.forEach((student) => {
-  //       console.log(student);
-  //       $('#liststudents').append(`<li>Name: ${student.name} | RollNo: ${student.rollno}</li>`)
-  //     })
-  //   })
-  // })
 
 })
+
+function validateEmail(email) {
+  let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
+
+
+
+
+// $.get('/api/student/viewAll', function (response) {
+//   if (response.success) {
+//     let students = response.data;
+//
+//     let studentsList = $('#studentsList');
+//
+//     for (let i = 0; i < students.length; i++) {
+//
+//       studentsList.append(`
+//     <li class="list-group-item">
+//       <div class="row text-center">
+//         <div class="col-3">${students[i].rollno}</div>
+//         <div class="col-6">${students[i].name}</div>
+//         <div class="col-3">E/X</div>
+//       </div>
+//     </li>`)
+//     }
+//   }
+// })
+
+// $('#submitstudentBtn').click(function () {
+//
+//   $.post('/api/student/add',
+//     {
+//       name: $('#name').val(),
+//       rollno: $('#rollno').val()
+//     },
+//     function (response) {
+//       if (response.success) {
+//         $('#addstudentModal').modal('hide');
+//         window.location.reload();
+//       }
+//       else {
+//         console.log("could not add the student right now")
+//       }
+//     })
+//
+// })
+
+
+// $('#viewAllstudents').click(function () {
+//   $.get('/api/student/viewAll', function (data) {
+//     $('#liststudents').empty()
+//
+//     data.forEach((student) => {
+//       console.log(student);
+//       $('#liststudents').append(`<li>Name: ${student.name} | RollNo: ${student.rollno}</li>`)
+//     })
+//   })
+// })
+
+
