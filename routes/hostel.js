@@ -8,6 +8,10 @@ const db = require('../db/models').db;
 const hostelQueries = require('../db/queries/hostel');
 const utils = require('../utils');
 
+route.get('/details/:id', (req, res) => {
+
+})
+
 route.post('/add', function (req, res) {
   db.query(hostelQueries.insertIntoTable(req.body.name, req.body.capacity)).then((data) => {
     res.send({
