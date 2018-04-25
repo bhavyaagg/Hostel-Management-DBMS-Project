@@ -12,9 +12,11 @@ const createTable = `
   );
 `
 
-const insertIntoTable = (name, qty) => {
+
+const insertIntoTable = (name, hid, qty) => {
+
     return `
-    INSERT INTO inventory(name,qty) values('${name}', '${qty}');
+    INSERT INTO inventory(name,hid,qty) values('${name}', ${hid}, ${qty});
   `
 }
 

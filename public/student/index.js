@@ -161,8 +161,6 @@ $(function () {
                 </div>
               </div>
             `)
-                  console.log(inventory)
-                  console.log('hi')
                   inventory.forEach((inventory) => {
                       $('#noticeBoard').append(`
               <li class="list-group-item">
