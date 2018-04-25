@@ -6,7 +6,7 @@ const createTable = `
   CREATE TABLE IF NOT EXISTS notices(
     title varchar(30) NOT NULL,
     desc varchar(300),
-    date DATE,
+    date DATE, 
     noticeid serial,
     PRIMARY KEY (noticeid) 
   );

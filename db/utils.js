@@ -2,7 +2,7 @@
  * Created by bhavyaagg on 02/04/18.
  */
 
-const createMinMaxTrigger = async function (triggerName, tableName, columnName, min, max, errorMsg) {
+const createMinMaxTrigger = function (triggerName, tableName, columnName, min, max, errorMsg) {
   return `CREATE TRIGGER ${triggerName} 
     BEFORE INSERT
     ON ${tableName} FOR EACH ROW 

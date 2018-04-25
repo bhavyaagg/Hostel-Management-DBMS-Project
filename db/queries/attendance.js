@@ -17,10 +17,20 @@ const addAttendance = (rollno) => {
     `
 }
 
-const newSession = ()=>{
+const checkAttendance = (rollno) => {
     return `
-    DELETE * from attendance`
+   BEGIN
+   IF NOT EXISTS (SELECT * FROM attendance where
+                    rollno='${rollno}'
+                   )
+   BEGIN
+       INSERT INTO attendance 
+       VALUES ('${rollno}', '0', '0')
+   END
+   END
+   `
 }
+
 
 const selectAll = `
   SELECT * FROM attendance;
@@ -32,8 +42,8 @@ const dropTable = `
 
 module.exports = {
     createTable,
-    insertIntoTable,
     selectAll,
     dropTable,
-    newSession
+    checkAttendance,
+    addAttendance
 }
