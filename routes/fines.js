@@ -36,4 +36,14 @@ route.post('/clear',(req,res)=>{
     }).catch(utils.errorFunction(req, res))
 })
 
+route.get('/viewSelect',(req,res)=>{
+    db.query(finesQueries.selectFew(req.user.dataValues.username)).then((fines) => {
+        res.send({
+            success: true,
+            data: fines[0]
+        })
+    }).catch(utils.errorFunction(req, res))
+})
+
+
 module.exports = route;

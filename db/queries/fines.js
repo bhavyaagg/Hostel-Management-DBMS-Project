@@ -32,11 +32,16 @@ const selectAll = `
 const dropTable = `
   DROP TABLE IF EXISTS fines;
 `
+const selectFew = (rno)=>{
 
+    return `
+  SELECT * FROM fines where rollno='${rno}';
+`}
 module.exports = {
     createTable,
     insertIntoTable,
     selectAll,
     dropTable,
-    clearFine
+    clearFine,
+    selectFew
 }
