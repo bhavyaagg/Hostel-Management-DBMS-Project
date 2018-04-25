@@ -507,6 +507,77 @@ $(function () {
       })
   })
 
+    $('#viewFines').click(() => {
+
+        $.get('/api/fines/viewSelect')
+            .done((data) => {
+                if (data.success) {
+                    let fines = data.data;
+                    console.log(fines)
+                    $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewAllHostels" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <b>FID</b>
+                      </div>
+                      <div class="col">
+                      <b>Roll Number</b>
+                      </div>
+
+                      <div class="col">
+                      <b>Remark</b>
+                      </div>
+                      <div class="col">
+                      <b>Amount</b>
+                      </div>
+                      <div class="col">
+                      <b>Paid</b>
+                      </div>
+
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+                    fines.forEach((fines) => {
+                        $('#noticeBoard').append(`
+              <li class="list-group-item">
+              <div class="row">
+                      <div class="col">
+                        ${fines.fid}
+                      </div>
+                      <div class="col">
+                        ${fines.rollno}
+                      </div>
+
+                      <div class="col">
+                        ${fines.remark}
+                      </div>
+                      <div class="col">
+                        ${fines.amount}
+                      </div>
+                      <div class="col">
+                        ${fines.paid?'Yes':'No'}
+                      </div>
+                    </div>
+              </li>
+
+                      `)
+                    })
+                } else {
+                    console.log("Some error view inventory")
+                }
+            })
+            .fail((err) => {
+                console.log(2)
+                console.log(err)
+            })
+    })
+
 })
 
 function validateEmail(email) {

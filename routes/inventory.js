@@ -9,7 +9,7 @@ const inventoryQueries = require('../db/queries/inventory');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-    db.query(inventoryQueries.insertIntoTable(req.body.name, req.body.hid, req.body.qtynode )).then((data) => {
+    db.query(inventoryQueries.insertIntoTable(req.body.name, req.body.hid, req.body.qty )).then((data) => {
         res.send({
             success: true
         });
