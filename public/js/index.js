@@ -121,16 +121,28 @@ $(document).ready(() => {
   });
 
   $('#loginButton').click(function () {
+    $('#errorLogin').text("");
+    let rollno = $('#loginUsername').val();
+    let password = $('#loginPassword').val()
+
+    if (!rollno || rollno.length <= 6 || rollno.length > 7) {
+      $('#errorLogin').text("Incorrect Roll Number");
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      $('#errorLogin').text("Password should have a minimum of 6 characters");
+      return;
+    }
 
     $.post("/login", {
-      username: $('#loginUsername').val(),
-      password: $('#loginPassword').val()
+      username: rollno,
+      password: password
     }, function (data) {
-      console.log(data)
       if (data.success) {
         window.location.replace(data.url)
       } else {
-        console.log("Error2")
+        $('#errorLogin').text("Incorrect Username/Password");
       }
       // console.log(authToken);
       // if (authToken.success === 'true') {
@@ -142,7 +154,6 @@ $(document).ready(() => {
       //   console.log("fail");
       // }
     }).fail(function (err) {
-      console.log(err);
       $('#error').text("Wrong Credentials");
       console.log("fail");
       console.log(err);

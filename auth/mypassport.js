@@ -31,12 +31,12 @@ passport.use(new LocalStrategy((username, password, done) => {
   }).then((user) => {
     if (!user) {
       // Username does not exist
-      return done(null, false)
+      return done(null, false, "Incorrect Username")
     }
     // In production use password hashes, do not save in db
     if (user.password !== password) {
       // Username exists, but password mismatch
-      return done(null, false)
+      return done(null, false, "Incorrect Password")
     }
 
     // All good
