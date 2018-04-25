@@ -6,10 +6,13 @@ const express = require('express')
 const route = express.Router();
 const db = require('../db/models').db;
 const hostelQueries = require('../db/queries/hostel');
+const roomQueries = require('../db/queries/rooms');
 const utils = require('../utils');
 
 route.get('/details/:id', (req, res) => {
-
+  db.query(roomQueries.getDetailsFromHid(+req.params.id)).then((data) => {
+    console.log(data);
+  })
 })
 
 route.post('/add', function (req, res) {

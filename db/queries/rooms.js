@@ -13,14 +13,15 @@ const createTable = `
 `
 
 const insertIntoTable = (roomno, floor, hid) => {
-    return `
+  return `
     INSERT INTO rooms(roomno, floor, hid) values('${roomno}',${floor},${hid});
   `
 }
 
-const getDetailsFromHid = (hid)=>{
-    return `
-    SELECT * FROM rooms where hid=${hid}`
+const getDetailsFromHid = (hid) => {
+  return `
+    SELECT * FROM rooms where hid=${hid};
+    `
 }
 
 const selectAll = `
@@ -32,9 +33,9 @@ const dropTable = `
 `
 
 module.exports = {
-    createTable,
-    insertIntoTable,
-    selectAll,
-    dropTable,
-    getDetailsFromHid
+  createTable,
+  insertIntoTable,
+  selectAll,
+  dropTable,
+  getDetailsFromHid
 }

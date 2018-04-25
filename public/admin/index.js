@@ -103,7 +103,7 @@ $(document).ready(() => {
 
           $('.viewDetails').click((e) => {
             let hid = e.currentTarget.getAttribute('data-id')
-            $.get('/api/hostel/details/${hid}')
+            $.get(`/api/hostel/details/${hid}`)
               .done(() => {
 
               })
