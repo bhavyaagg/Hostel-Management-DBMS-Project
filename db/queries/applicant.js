@@ -1,6 +1,3 @@
-/**
- * Created by bhavyaagg on 08/04/18.
- */
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS applicant(
