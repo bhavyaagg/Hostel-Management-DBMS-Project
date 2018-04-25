@@ -1,32 +1,26 @@
 /**
- * Created by bhavyaagg on 01/04/18.
+ * Created by bhavyaagg on 25/04/18.
  */
 
 const express = require('express')
 const route = express.Router();
 const db = require('../db/models').db;
-const studentQueries = require('../db/queries/student');
+const wardenQueries = require('../db/queries/wardens');
 const utils = require('../utils');
 
 const {User} = require('../db/models').models
 
-route.post('/add', function (req, res) {
-  db.query(studentQueries.insertIntoTable(req.body)).then((data) => {
-    User.create({
-      username: req.body.rollno,
-      password: req.body.password
-    }).then(() => {
-      res.send({
-        success: true,
-        url: "/"
-      });
-    }).catch((err) => {
-      console.log("Error")
-      res.status(500).send(
-        `Error in creating user
-      ${err.message}
-      `
-      )
+route.post('/authorize', function (req, res) {
+  db.query(wardenQueries.getWarden(req.body.username, req.body.password)).then((data) => {
+    if (data[0].length === 0) {
+      return res.send({
+        success: false,
+        error: "No Warden with this username and password"
+      })
+    }
+    return res.send({
+      success: true,
+      data: data[0]
     })
   }).catch(utils.errorFunction(req, res));
 })
