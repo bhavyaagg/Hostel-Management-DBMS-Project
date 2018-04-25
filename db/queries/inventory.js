@@ -4,13 +4,30 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS inventory(
-    emid int,
+    emid SERIAL PRIMARY KEY,
     hid int,
+    name varchar(30),
     qty int check(qty>0),
-    PRIMARY KEY (emid, hid),
-    FOREIGN KEY emid REFERENCES emergencyitems(emid),
-    FOREIGN KEY hid REFERENCES hostel(hid)
+    FOREIGN KEY (hid) REFERENCES hostel(hid)
   );
+`
+
+
+const insertIntoTable = (name, hid, qty) => {
+
+    return `
+    INSERT INTO inventory(name,hid,qty) values('${name}', ${hid}, ${qty});
+  `
+}
+
+const selectHostelInventory = (hid) => {
+    return `
+  SELECT * FROM inventory where hid='${hid}'
+  `
+}
+
+const selectAll = `
+  SELECT emid, hostel.hid, inventory.name as name, qty, hostel.name as hname FROM inventory, hostel where hostel.hid=inventory.hid;
 `
 
 const dropTable = `
@@ -18,6 +35,9 @@ const dropTable = `
 `
 
 module.exports = {
-  createTable,
-  dropTable
+    createTable,
+    dropTable,
+    insertIntoTable,
+    selectAll,
+    selectHostelInventory
 }

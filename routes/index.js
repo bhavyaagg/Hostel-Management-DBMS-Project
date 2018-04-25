@@ -12,4 +12,5 @@ route.use('/staff', require('./staff'));
 route.use('/rooms', require('./rooms'));
 route.use('/warden', require('./warden'));
 route.use('/notices', require('./notices'));
+route.use('/inventory', require('./inventory'));
 module.exports = route;
