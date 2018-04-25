@@ -80,47 +80,69 @@ $(document).ready(() => {
       pincode,
       outsideDelhi,
       pwd
-    }, function (student) {
-      console.log(student);
-      if (student.success === 'true') {
+    }).done(function (student) {
+      if (student.success) {
+        console.log(1)
+        $('#loginTabSelect').click();
+
+        $('#error').removeClass('text-danger').addClass('text-success').text("Registration Successful. Please Login");
+
         //console.log("yo");
-        $.post("/authorize", {
-          email: userEmail,
-          password: userPassword
-        }, function (authToken) {
-          console.log(authToken);
-          if (authToken.success === 'true') {
-            window.localStorage.name = authToken.name;
-
-            window.localStorage.token = authToken.token;
-            window.location.replace(authToken.url);
-
-          }
-        }).fail(function (err) {
-          $('#error').text("Wrong Credentials");
-          console.log("fail");
-          console.log(err);
-        });
+        // $.post("/authorize", {
+        //   email: userEmail,
+        //   password: userPassword
+        // }, function (authToken) {
+        //   console.log(authToken);
+        //   if (authToken.success === 'true') {
+        //     window.localStorage.name = authToken.name;
+        //
+        //     window.localStorage.token = authToken.token;
+        //     window.location.replace(authToken.url);
+        //
+        //   }
+        // }).fail(function (err) {
+        //   $('#error').text("Wrong Credentials");
+        //   console.log("fail");
+        //   console.log(err);
+        // });
+      } else {
+        console.log(2)
+        console.log(student.error);
+        $('#errorRegister').text("")
+      }
+    }).fail(function (student) {
+      console.log(student.responseJSON)
+      if (student.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+        $('#errorRegister').text(`${student.responseJSON.error.errors[0].type}! ${student.responseJSON.error.errors[0].message}`)
+      } else {
+        $('#errorRegister').text('Other Error');
       }
     });
   });
 
   $('#loginButton').click(function () {
 
-    $.post("/authorize", {
-      email: $('#loginEmail').val(),
+    $.post("/login", {
+      username: $('#loginUsername').val(),
       password: $('#loginPassword').val()
-    }, function (authToken) {
-      console.log(authToken);
-      if (authToken.success === 'true') {
-        window.localStorage.token = authToken.token;
-        window.localStorage.name = authToken.name;
-        window.location.replace(authToken.url)
+    }, function (data) {
+      console.log(data)
+      if (data.success) {
+        window.location.replace(data.url)
       } else {
-        $('#error').text(authToken.message);
-        console.log("fail");
+        console.log("Error2")
       }
+      // console.log(authToken);
+      // if (authToken.success === 'true') {
+      //   window.localStorage.token = authToken.token;
+      //   window.localStorage.name = authToken.name;
+      //   window.location.replace(authToken.url)
+      // } else {
+      //   $('#error').text(authToken.message);
+      //   console.log("fail");
+      // }
     }).fail(function (err) {
+      console.log(err);
       $('#error').text("Wrong Credentials");
       console.log("fail");
       console.log(err);
