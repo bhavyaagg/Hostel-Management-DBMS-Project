@@ -187,9 +187,6 @@ function validateEmail(email) {
 }
 
 
-
-
-
 // $.get('/api/student/viewAll', function (response) {
 //   if (response.success) {
 //     let students = response.data;
