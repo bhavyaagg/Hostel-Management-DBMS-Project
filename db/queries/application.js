@@ -26,6 +26,12 @@ const insertIntoTable = (data) => {
   `
 }
 
+const checkIfExists = (rollno) => {
+  return `
+    SELECT * FROM application WHERE rollno='${rollno}';
+  `
+}
+
 const selectAll = `
   SELECT * FROM application;
 `
@@ -38,5 +44,6 @@ module.exports = {
   createTable,
   insertIntoTable,
   selectAll,
-  dropTable
+  dropTable,
+  checkIfExists
 }

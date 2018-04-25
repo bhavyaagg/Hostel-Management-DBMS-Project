@@ -28,6 +28,21 @@ route.post('/add', function (req, res) {
   }).catch(utils.errorFunction(req, res));
 })
 
+route.get('/exists', (req, res) => {
+  if (!req.user) {
+    return res.status(401).send({
+      success: false,
+      error: "Unauthorized"
+    })
+  }
+  db.query(applicationQueries.checkIfExists(req.user.dataValues.username)).then((data) => {
+    res.send({
+      success: data[0].length !== 0,
+      data: data[0]
+    })
+  }).catch(utils.errorFunction(req, res))
+
+})
 
 route.get('/viewAll', (req, res) => {
   db.query(applicationQueries.selectAll).then((applications) => {

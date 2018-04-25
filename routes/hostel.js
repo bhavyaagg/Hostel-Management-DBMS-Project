@@ -11,14 +11,16 @@ const wardenQueries = require('../db/queries/wardens')
 const utils = require('../utils');
 
 route.get('/details/:id', (req, res) => {
-  db.query(roomQueries.getDetailsFromHid(+req.params.id)).then((roomsData) => {
-
-    db.query(wardenQueries.getWardenFromHostelID(+req.params.id)).then((data) => {
-      res.send({
-        success: true,
-        data: roomsData[0],
-        wardenData: data[0]
-      });
+  db.query(hostelQueries.getFromID(+req.params.id)).then((hostelData) => {
+    db.query(roomQueries.getDetailsFromHid(+req.params.id)).then((roomsData) => {
+      db.query(wardenQueries.getWardenFromHostelID(+req.params.id)).then((data) => {
+        res.send({
+          success: true,
+          data: roomsData[0],
+          wardenData: data[0],
+          hostelData: hostelData[0]
+        });
+      })
     })
   }).catch(utils.errorFunction(req, res));
 })
