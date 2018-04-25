@@ -358,7 +358,7 @@ $(function () {
   $('#viewInventory').click(() => {
     $.get('/api/inventory/viewAll')
       .done((data) => {
-        if (data.success) {
+        if (data.success && data.data.length !== 0) {
           let inventory = data.data;
           $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
@@ -410,7 +410,13 @@ $(function () {
                       `)
           })
         } else {
-          console.log("Some error view inventory")
+          $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col text-capitalize text-danger">
+                  No Inventory
+                </div>
+              </div>
+            `)
         }
       })
       .fail((err) => {
