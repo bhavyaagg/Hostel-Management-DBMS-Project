@@ -4,7 +4,7 @@
 
 const express = require('express')
 const route = express.Router();
-const db = require('../db/models');
+const db = require('../db/models').db;
 const staffQueries = require('../db/queries/staff');
 const utils = require('../utils');
 
