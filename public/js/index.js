@@ -70,13 +70,16 @@ $(document).ready(() => {
       return;
     }
 
-    $.post("/signup/student", {
-      name: userName,
-      email: userEmail,
-      password: userPassword,
-      contact: userContact,
-      class: userClass,
-      pincode: userPincode
+    $.post("/api/student/add", {
+      name,
+      email,
+      rollno,
+      password,
+      contact,
+      address,
+      pincode,
+      outsideDelhi,
+      pwd
     }, function (student) {
       console.log(student);
       if (student.success === 'true') {

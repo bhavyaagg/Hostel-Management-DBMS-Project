@@ -7,8 +7,8 @@ const createTable = `
     visitorNo serial PRIMARY KEY
     entryDateTime timestamp,
     exitDateTime timestamp,
-    rollNo int,
-    FOREIGN KEY (rollNo) REFERENCES applicant(rollNo)
+    rollno varchar(7),
+    FOREIGN KEY (rollno) REFERENCES student(rollno)
   );
 `
 

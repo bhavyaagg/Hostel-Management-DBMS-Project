@@ -5,7 +5,7 @@
 const errorFunction = (req, res) => {
   return (err) => {
     console.log(err);
-    res.send(err);
+    res.status(500).send(err);
   }
 }
 module.exports = {

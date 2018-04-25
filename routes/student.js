@@ -5,29 +5,32 @@
 const express = require('express')
 const route = express.Router();
 const db = require('../db/models').db;
-const applicantQueries = require('../db/queries/applicant');
+const studentQueries = require('../db/queries/student');
 const utils = require('../utils');
+
+const {User} = require('../db/models').models
 
 route.post('/add', function (req, res) {
 
-  if (!req.body.rollno) {
-    return res.send("Cannot create user with no username")
-  }
-  if (!req.body.password) {
-    return res.send("Cannot create user without password")
-  }
 
-  db.query(applicantQueries.insertIntoTable(req.body.rollno, req.body.name)).then((data) => {
+  db.query(studentQueries.insertIntoTable(req.body)).then((data) => {
+    console.log("!!!!!!!!!!!")
+    console.log(data)
+    console.log("!!!!!!!!!!!")
     User.create({
       username: req.body.rollno,
       password: req.body.password
     }).then((newuser) => {
+      console.log("@@@@@@@@@@@@@")
+      console.log(newuser.get());
+      console.log("@@@@@@@@@@@@@")
       res.send({
         success: true,
         url: "/"
       });
     }).catch((err) => {
-      res.send(
+      console.log("Error")
+      res.status(500).send(
         `Error in creating user
       ${err.message}
       `
@@ -39,10 +42,10 @@ route.post('/add', function (req, res) {
 
 
 route.get('/viewAll', (req, res) => {
-  db.query(applicantQueries.selectAll).then((applicants) => {
+  db.query(studentQueries.selectAll).then((students) => {
     res.send({
       success: true,
-      data: applicants[0]
+      data: students[0]
     })
   }).catch(utils.errorFunction(req, res));
 })

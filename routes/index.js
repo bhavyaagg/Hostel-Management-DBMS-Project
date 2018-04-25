@@ -5,7 +5,7 @@
 const express = require('express')
 const route = express.Router();
 
-route.use('/applicant', require('./applicant'));
+route.use('/student', require('./student'));
 route.use('/application', require('./application'));
 route.use('/hostel', require('./hostel'));
 route.use('/staff', require('./staff'));

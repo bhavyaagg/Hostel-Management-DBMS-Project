@@ -24,7 +24,7 @@ const User = db.define('user', {
   }
 })
 
-db.sync({force: false}).then(() => {
+db.sync({force: process.env.FORCE}).then(() => {
   console.log("Database Configured");
 })
 

@@ -12,27 +12,27 @@
 </head>
 <body>
 
-<div class="modal fade" id="addApplicantModal" tabindex="-1" role="dialog" aria-labelledby="Add Applicant Modal"
+<div class="modal fade" id="addstudentModal" tabindex="-1" role="dialog" aria-labelledby="Add student Modal"
      aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header customModalHeader">
-        <h5 class="modal-title customModalTitle text-center" style="">Add Applicant</h5>
+        <h5 class="modal-title customModalTitle text-center" style="">Add student</h5>
         <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
           <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group mb-0" id="addApplicantForm">
-          <label class="mr-2 customLabel" for="name">Applicant Name: </label>
+        <div class="form-group mb-0" id="addstudentForm">
+          <label class="mr-2 customLabel" for="name">student Name: </label>
           <input id="name" required type="text" class="form-control mb-2"><br>
-          <label class="mr-2 customLabel" for="rollno">Applicant Roll Number: </label>
+          <label class="mr-2 customLabel" for="rollno">student Roll Number: </label>
           <input id="rollno" required type="text" class="form-control mb-2"><br>
         </div>
       </div>
-      <p class="text-center text-danger" id="addApplicantError"></p>
+      <p class="text-center text-danger" id="addstudentError"></p>
       <div class="modal-footer customFooter">
-        <button id="submitApplicantBtn" class="btn btn-success addButtons">Submit</button>
+        <button id="submitstudentBtn" class="btn btn-success addButtons">Submit</button>
       </div>
     </div>
   </div>
@@ -48,7 +48,7 @@
   <div class="row p-4">
     <div class="col-3">
       <a href="/hostel" class="btn btn-outline-primary sideButtons">Hostel</a>
-      <a href="/applicant" class="btn btn-outline-primary sideButtons active">Applicant</a>
+      <a href="/student" class="btn btn-outline-primary sideButtons active">student</a>
       <a href="/application" class="btn btn-outline-primary sideButtons">Application</a>
       <a href="/staff" class="btn btn-outline-primary sideButtons">Staff</a>
       <br>
@@ -59,16 +59,16 @@
         <div class="row text-center">
           <div class="col-sm-3"></div>
           <div class="col-sm-6">
-            <h1 class="m-0" id="title">Applicants</h1>
+            <h1 class="m-0" id="title">students</h1>
           </div>
           <div class="col-sm-3 mt-auto mb-auto">
-            <button class="btn btn-primary addButtons" data-toggle="modal" data-target="#addApplicantModal">
-              Add Applicant
+            <button class="btn btn-primary addButtons" data-toggle="modal" data-target="#addstudentModal">
+              Add student
             </button>
           </div>
         </div>
         <div class="row p-5">
-          <ul id="applicantsList" class="list-group" style="width: 100%">
+          <ul id="studentsList" class="list-group" style="width: 100%">
             <li class="list-group-item">
               <div class="row text-center">
                 <div class="col-3"><b>Roll Number</b></div>
