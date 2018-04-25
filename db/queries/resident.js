@@ -5,9 +5,9 @@
 const createTable = `
   CREATE TABLE IF NOT EXISTS resident(
     iCardNo int check(iCardNo > 0),
-    rollNo int,
+    rollno varchar(7),
     PRIMARY KEY (iCardNo),
-    FOREIGN KEY (rollNo) REFERENCES applicant(rollNo) 
+    FOREIGN KEY (rollno) REFERENCES student(rollno) 
   );
 `
 

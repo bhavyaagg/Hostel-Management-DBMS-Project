@@ -6,10 +6,10 @@ const createTable = `
   CREATE TABLE IF NOT EXISTS feepayment(
     dateSubmitted timestamp check(dateSubmitted>'2000-01-01' AND dateSubmitted < now()),
     status varchar(20),
-    rollNo int,
+    rollno varchar(7),
     fid int,
-    PRIMARY KEY(rollNo, fid),
-    FOREIGN KEY rollNo REFERENCES applicant(rollNo),
+    PRIMARY KEY(rollno, fid),
+    FOREIGN KEY rollno REFERENCES student(rollno),
     FOREIGN KEY fid REFERENCES fee(fid)
   );
 `

@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Hostel Management System</title>
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/index.css">
-
-    <script src="../js/jquery-3.3.1.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <script src="../js/index.js"></script>
+  <meta charset="UTF-8">
+  <title>Hostel Management System</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/index.css">
+  
+  <script src="../js/jquery-3.3.1.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  <script src="index.js"></script>
+  <style>
+    #noticeBoard{
+      display: none;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-    <div class="row pt-4 pl-4 pr-4">
-        <div class="col text-center text-capitalize">
-            <h1>Hostel Database Management System</h1>
-        </div>
+  <div class="row pt-4 pl-4 pr-4">
+    <div class="col text-center text-capitalize">
+      <h1>Hostel Database Management System</h1>
     </div>
-    <hr class="mt-0">
-
-    <div class="row p-4">
+  </div>
+  <hr class="mt-0">
+  
+  <div class="row p-4">
     <div class="col-3">
-        <br/>
-        <a id="showStudentDetails" class="btn text-white btn-primary col-12">View Details</a><br/><br/>
-        <a id="showAttendance" class="btn text-white btn-primary col-12">View Attendance</a><br/><br/>
-        <a id="apply" class="btn btn-primary text-white col-12">Apply</a><br/><br/>
-        <a id="viewInventory" class="btn text-white btn-primary col-12">View Hostel Inventory</a><br/><br/>
-        <a id="vacateRoom" class="btn text-white btn-primary col-12">Vacate Room</a><br/><br/>
-        <a id="viewFines" class="btn text-white btn-primary col-12">View Fines</a><br/><br/>
-        <a id="viewApplicationStatus" class="btn text-white btn-primary col-12">View Application Status</a><br/><br/>
-        <a id="notices" class="btn text-white btn-primary col-12">View Notices</a><br/><br/>
+      <button id="showStudentDetails" class="btn text-white btn-primary col-12">View Details</button><br/><br/>
+      <button id="showAttendance" class="btn text-white btn-primary col-12">View Attendance</button><br/><br/>
+      <button id="apply" class="btn btn-primary text-white col-12">Apply</button><br/><br/>
+      <button id="viewInventory" class="btn text-white btn-primary col-12">View Hostel Inventory</button><br/><br/>
+      <button id="vacateRoom" class="btn text-white btn-primary col-12">Vacate Room</button><br/><br/>
+      <button id="viewFines" class="btn text-white btn-primary col-12">View Fines</button><br/><br/>
+      <button id="viewApplicationStatus" class="btn text-white btn-primary col-12">View Application Status</button><br/><br/>
+      <button id="notices" class="btn text-white btn-primary col-12">View Notices</button><br/><br/>
     </div>
     <div class="col-9">
-        <div id="noticeBoard" class="border h-100 bg-light">
-
-        </div>
+      <div id="noticeBoard" class="border p-5 bg-light">
+      
+      </div>
     </div>
-    </div>
+  </div>
 
 </div>
 

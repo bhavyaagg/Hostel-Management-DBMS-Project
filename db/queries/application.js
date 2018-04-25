@@ -7,15 +7,15 @@ const createTable = `
     aid SERIAL,
     dateSubmitted date check(dateSubmitted>'2000-01-01' AND dateSubmitted <= now()),
     status varchar(20),
-    rollNo int,
+    rollno varchar(7),
     PRIMARY KEY (aid),
-    FOREIGN KEY (rollNo) REFERENCES applicant(rollNo)  
+    FOREIGN KEY (rollno) REFERENCES student(rollno)  
   );
 `
 
 const insertIntoTable = (date, status, rollno) => {
   return `
-    INSERT INTO application(dateSubmitted, status, rollNo) values('${date}','${status}',${rollno});
+    INSERT INTO application(dateSubmitted, status, rollno) values('${date}','${status}',${rollno});
   `
 }
 
