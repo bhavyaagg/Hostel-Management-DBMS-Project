@@ -54,3 +54,7 @@ a {
     justify-content: center;
     padding-top: 5px
 }
+
+#forms{
+    display: none;
+}

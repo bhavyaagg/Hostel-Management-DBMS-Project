@@ -8,6 +8,7 @@
   
   <script src="js/jquery-3.3.1.js"></script>
   <script src="js/bootstrap.js"></script>
+  <script src="js/index.js"></script>
 </head>
 <body>
 <div class="container">
@@ -17,15 +18,142 @@
     </div>
   </div>
   <hr class="mt-0">
-  <div class="row p-4">
-    <div class="col-3">
-      <a href="/hostel" class="btn btn-outline-primary sideButtons">Hostel</a>
-      <a href="/applicant" class="btn btn-outline-primary sideButtons">Applicant</a>
-      <a href="/application" class="btn btn-outline-primary sideButtons">Application</a>
-      <a href="/staff" class="btn btn-outline-primary sideButtons">Staff</a>
+  <div class="row" id="showForms">
+    <div class="col-12 text-center text-capitalize">
+      <h2>
+        Made By:<br/>
+        Astitwa Saxena (239/CO/15)<br/>
+        Bhavya Aggarwal (242/CO/15)<br/>
+        Dolly Mathur (253/CO/15)<br/>
+      </h2>
     </div>
-    <div class="col-9"></div>
+    <div class="col-12">
+      <br/>
+      <br/>
+      <button class="btn btn-primary col-12" id="showFormsBtn">
+        Register/Login
+      </button>
+    </div>
   </div>
+  <div id="forms" class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-10 offset-1" style="padding: 0">
+        <ul class="nav nav-tabs nav-justified " role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active nav-style a-style" data-toggle="tab"
+               href="#registerTab">REGISTER</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-style a-style" data-toggle="tab" href="#loginTab">LOGIN</a>
+          </li>
+        </ul>
+      </div>
+    
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="registerTab" role="tabpanel">
+          <div class="row justify-content-center">
+            <div class="col-sm-10">
+              <br>
+              <br>
+              <form id="registerForm">
+                <div class="form-group">
+                  <input id="registerName" required type="text" class="form-control input"
+                         placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                  <input id="registerEmail" required type="email" class="form-control input"
+                         placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input id="registerUsername" required type="text" class="form-control input"
+                         placeholder="Roll No (Will be your username)">
+                </div>
+                <div class="form-group">
+                  <input id="registerPassword" required type="password" class="form-control input"
+                         placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <input id="registerContact" required type="tel" class="form-control input"
+                         placeholder="Contact">
+                </div>
+                <div class="form-group">
+                  <textarea id="registerAddress" required type="text" class="form-control input" placeholder="Address"></textarea>
+                </div>
+                <div class="form-group">
+                  <input id="registerPincode" required type="text" class="form-control input"
+                         placeholder="Pincode">
+                </div>
+                
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    Outside Delhi: &nbsp;
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="registerOutsideDelhi" value="1"> Yes
+                      <input class="form-check-input" type="radio" name="registerOutsideDelhi" value="0"> No
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    Person With Disability: &nbsp;
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="registerPWD" value="1"> Yes
+                      <input class="form-check-input" type="radio" name="registerPWD" value="0"> No
+                    </label>
+                  </div>
+                </div>
+                <div id="errorRegister" class="text-danger">
+                </div>
+                <div class="form-group">
+                  <button id="registerButton" class="btn btn-lg btn-block btn-info btn-style">
+                    Register
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="loginTab" role="tabpanel">
+          <div class="row justify-content-center">
+            <div class="col-sm-10">
+              <br>
+              <br>
+              <form id="loginForm">
+                <div class="form-group">
+                  <input id="loginUsername" type="text" class="form-control input"
+                         placeholder="Roll Number">
+                </div>
+                <div class="form-group">
+                  <input id="loginPassword" type="password" class="form-control input"
+                         placeholder="Password">
+                </div>
+                <div id="errorLogin" class="text-danger">
+                </div>
+                <div id="error" class="text-danger">
+              
+                </div>
+                <div class="form-group">
+                  <button id="loginButton" class="btn btn-info btn-block btn-lg btn-style">Login
+                  </button>
+                </div>
+              </form>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="row p-4">-->
+    <!--<div class="col-3">-->
+      <!--<a href="/hostel" class="btn btn-outline-primary sideButtons">Hostel</a>-->
+      <!--<a href="/applicant" class="btn btn-outline-primary sideButtons">Applicant</a>-->
+      <!--<a href="/application" class="btn btn-outline-primary sideButtons">Application</a>-->
+      <!--<a href="/staff" class="btn btn-outline-primary sideButtons">Staff</a>-->
+    <!--</div>-->
+    <!--<div class="col-9"></div>-->
+  <!--</div>-->
 
 </div>
 
