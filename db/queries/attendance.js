@@ -17,6 +17,12 @@ const addAttendance = (rollno) => {
     `
 }
 
+const absent = (rollno) => {
+    return `
+    UPDATE attendance SET totalDays = totalDays + 1 where rollno='${rollno}'
+    `
+}
+
 const selectOne = (rollno)=>{
     return `SELECT * from attendance where rollno='${rollno}'`
 }
@@ -56,5 +62,6 @@ module.exports = {
     checkAttendance,
     addAttendance,
     selectOne,
-    viewByHid
+    viewByHid,
+    absent
 }

@@ -470,8 +470,27 @@ $(document).ready(() => {
 
                         attendance.forEach((attendance,idx)=>{
                             rno=attendance.rno
-                            if($('#cb'+idx).checked) {
+                            if($('#cb'+idx).is(":checked")) {
                                 $.post("/api/attendance/add", {rno}).done(function (hostel) {
+                                    if (hostel.success) {
+                                        $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
+                                    } else {
+                                        console.log(2)
+                                        console.log(hostel.error);
+                                        $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
+                                    }
+                                }).fail(function (hostel) {
+                                    console.log(hostel.responseJSON)
+                                    if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                                        $('#errorAddFine').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
+                                    } else {
+                                        $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Hostel2")
+                                    }
+                                });
+                            }
+                            else{
+                                console.log('absent');
+                                $.post("/api/attendance/absent", {rno}).done(function (hostel) {
                                     if (hostel.success) {
                                         $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
                                     } else {
