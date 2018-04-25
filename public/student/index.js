@@ -99,13 +99,13 @@ $(function () {
     $.get('/api/hostel/viewAll')
       .done((data) => {
         if (data.success) {
-          let hostels = data.data;
-          $('#noticeBoard').empty().css('display', 'block')
-          hostels.forEach((hostel) => {
-            $('#noticeBoard').append(`
+          let inventory = data.data;
+            $('#noticeBoard').empty().css('display', 'block')
+            inventory.forEach((inventory) => {
+                $('#viewAllHostels').append(`
               
             `)
-          })
+            })
         } else {
           console.log("Some error apply")
         }
@@ -126,5 +126,73 @@ $(function () {
   //     })
   //   })
   // })
+
+
+
+  $('#viewInventory').click(() => {
+      $.get('/api/inventory/viewAll')
+          .done((data) => {
+              if (data.success) {
+                  let inventory = data.data;
+                  $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewAllHostels" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <b>EMID</b>
+                      </div>
+                      <div class="col">
+                      <b>HOSTEL NAME</b>
+                      </div> 
+                      
+                      <div class="col">
+                      <b>ITEM NAME</b>
+                      </div> 
+                      <div class="col">
+                      <b>QUANTITY</b>
+                      </div> 
+                      
+                      
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+                  console.log(inventory)
+                  console.log('hi')
+                  inventory.forEach((inventory) => {
+                      $('#noticeBoard').append(`
+              <li class="list-group-item">
+              <div class="row">
+                      <div class="col">
+                        ${inventory.emid}
+                      </div>
+                      <div class="col">
+                        ${inventory.hname}
+                      </div>
+                      
+                      <div class="col">
+                        ${inventory.name}
+                      </div> 
+                      <div class="col">
+                        ${inventory.qty}
+                      </div> 
+                    </div>
+              </li>
+                        
+                      `)
+                  })
+              } else {
+                  console.log("Some error view inventory")
+              }
+          })
+          .fail((err) => {
+              console.log(2)
+              console.log(err)
+          })
+  })
 
 })
