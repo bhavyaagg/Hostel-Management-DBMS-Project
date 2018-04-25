@@ -15,6 +15,11 @@ route.post('/add', function (req, res) {
       error: "Unauthorized"
     })
   }
+
+  req.body.rollno = req.user.dataValues.username;
+  req.body.room1 = req.body.room1 ? req.body.room1 : null;
+  req.body.room2 = req.body.room2 ? req.body.room2 : null;
+  req.body.room3 = req.body.room3 ? req.body.room3 : null;
   db.query(applicationQueries.insertIntoTable(req.body)).then((data) => {
     res.send({
       success: true,

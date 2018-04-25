@@ -389,21 +389,24 @@ $(function () {
                   $('#applyForHostelButton').click(() => {
                     let $preferences = $('.roomPreference');
                     let noOfPreferencesFilled = 0;
-                    let finalPreferences = {};
+                    let finalPreferences = {
+                      "1": 0,
+                      "2": 0,
+                      "3": 0
+                    };
                     $preferences.each((i, preference) => {
                       let value = $(preference).val();
-                      if (value) {
-                        noOfPreferencesFilled++;
-                      }
-                      console.log(2)
                       if (+value === 1) {
                         finalPreferences[1] = $(preference).parent().attr('data-id')
+                        noOfPreferencesFilled++;
                       }
                       if (+value === 2) {
                         finalPreferences[2] = $(preference).parent().attr('data-id')
+                        noOfPreferencesFilled++;
                       }
                       if (+value === 3) {
                         finalPreferences[3] = $(preference).parent().attr('data-id')
+                        noOfPreferencesFilled++;
                       }
                     })
                     if (noOfPreferencesFilled < 1 || noOfPreferencesFilled > 3) {
@@ -412,7 +415,17 @@ $(function () {
                       return;
                     }
                     console.log(finalPreferences)
-                    $.post('/api/application')
+                    $.post('/api/application/add', {
+                      date: (new Date()).toJSON().split("T")[0],
+                      hid: hid,
+                      room1: finalPreferences[1],
+                      room2: finalPreferences[2],
+                      room3: finalPreferences[3]
+                    }).done((data) => {
+                      console.log(data)
+                    }).fail((err) => {
+                      console.log(err);
+                    })
                   })
 
 
