@@ -11,19 +11,11 @@ const utils = require('../utils');
 const {User} = require('../db/models').models
 
 route.post('/add', function (req, res) {
-
-
   db.query(studentQueries.insertIntoTable(req.body)).then((data) => {
-    console.log("!!!!!!!!!!!")
-    console.log(data)
-    console.log("!!!!!!!!!!!")
     User.create({
       username: req.body.rollno,
       password: req.body.password
-    }).then((newuser) => {
-      console.log("@@@@@@@@@@@@@")
-      console.log(newuser.get());
-      console.log("@@@@@@@@@@@@@")
+    }).then(() => {
       res.send({
         success: true,
         url: "/"
@@ -36,10 +28,24 @@ route.post('/add', function (req, res) {
       `
       )
     })
-
   }).catch(utils.errorFunction(req, res));
 })
 
+route.get('/mydetails', (req, res) => {``
+  if(!req.user){
+    console.log("No User")
+    return res.send({
+      success: false,
+      error: "No User"
+    })
+  }
+  db.query(studentQueries.getDetails(req.user.dataValues.username)).then((data) => {
+    res.send({
+      success: true,
+      data: data[0][0]
+    })
+  }).catch(utils.errorFunction(req,res))
+})
 
 route.get('/viewAll', (req, res) => {
   db.query(studentQueries.selectAll).then((students) => {

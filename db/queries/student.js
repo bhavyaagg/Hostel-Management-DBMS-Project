@@ -30,6 +30,12 @@ const insertIntoTable = (applicant) => {
   `
 }
 
+const getDetails = (rollno) => {
+  return `
+    SELECT * FROM student WHERE rollno='${rollno}'
+  `
+}
+
 const selectAll = `
   SELECT * FROM student;
 `
@@ -41,6 +47,7 @@ const dropTable = `
 module.exports = {
   createTable,
   insertIntoTable,
+  getDetails,
   selectAll,
   dropTable
 }
