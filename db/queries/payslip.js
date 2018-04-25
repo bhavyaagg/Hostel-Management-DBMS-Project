@@ -4,10 +4,12 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS payslip(
+    pid serial PRIMARY KEY,
     sid int check(sid > 0),
     month varchar(30) NOT NULL,
     amount int check(amount>=0),
-    PRIMARY KEY (sid) 
+    PRIMARY KEY (sid),
+    FOREIGN KEY(sid) references staff(sid)
   );
 `
 

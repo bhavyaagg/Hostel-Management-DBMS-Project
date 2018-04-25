@@ -7,7 +7,8 @@ const createTable = `
     rollno int check(rollNo > 0),
     totalPresent int,
     totalDays int,
-    PRIMARY KEY (rollNo)
+    PRIMARY KEY (rollNo).
+    FOREIGN KEY(rollno) references student(rollno)
   );
 `
 
