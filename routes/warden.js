@@ -33,6 +33,15 @@ route.post('/add', function (req, res) {
   }).catch(utils.errorFunction(req, res));
 })
 
+route.get('/getWarden', (req, res) => {
+  db.query(wardenQueries.getWardenFromHostelID(req.body.hid)).then((data) => {
+    res.send({
+      success: true,
+      data: data[0]
+    });
+  }).catch(utils.errorFunction(req, res));
+})
+
 route.post('/update', function (req, res) {
   if (!req.user) {
     return res.status(401).send({

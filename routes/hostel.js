@@ -7,13 +7,18 @@ const route = express.Router();
 const db = require('../db/models').db;
 const hostelQueries = require('../db/queries/hostel');
 const roomQueries = require('../db/queries/rooms');
+const wardenQueries = require('../db/queries/wardens')
 const utils = require('../utils');
 
 route.get('/details/:id', (req, res) => {
-  db.query(roomQueries.getDetailsFromHid(+req.params.id)).then((data) => {
-    res.send({
-      success: true,
-      data: data[0]
+  db.query(roomQueries.getDetailsFromHid(+req.params.id)).then((roomsData) => {
+
+    db.query(wardenQueries.getWardenFromHostelID(+req.params.id)).then((data) => {
+      res.send({
+        success: true,
+        data: roomsData[0],
+        wardenData: data[0]
+      });
     })
   }).catch(utils.errorFunction(req, res));
 })

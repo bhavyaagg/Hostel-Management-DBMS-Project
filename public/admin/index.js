@@ -164,9 +164,8 @@ $(document).ready(() => {
             $.get(`/api/hostel/details/${hid}`)
               .done((data) => {
                 if (data.success) {
-                  console.log(data.data)
+                  console.log(data.wardenData)
                   let rooms = data.data;
-
 
                   $('#noticeBoard').css('display', 'block').empty().append(
                     `
@@ -176,13 +175,15 @@ $(document).ready(() => {
                     <li class="list-group-item">Name</li>
                     <li class="list-group-item">Capacity</li>
                     <li class="list-group-item">Number of Vacant Rooms</li>
+                    <li class="list-group-item">Warden</li>
                   </ul>
                 </div>
                 <div class="col">
                   <ul id="listDetails" class="list-group">
                   <li class="list-group-item">${name}</li>
                   <li class="list-group-item">${capacity}</li>
-                  <li id="noOfVacantRooms" class="list-group-item"></li>                  
+                  <li id="noOfVacantRooms" class="list-group-item"></li>
+                  <li class="list-group-item">${data.wardenData[0].username}</li>                                   
                   </ul>
                 </div>
               </div>
