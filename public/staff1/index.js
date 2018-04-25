@@ -4,7 +4,7 @@
 
 $(function () {
 
-  $.get('/api/staff/viewAll', function (response) {
+  $.get('/api/staff1/viewAll', function (response) {
     if (response.success) {
       let staffs = response.data;
 
@@ -27,7 +27,7 @@ $(function () {
 
   $('#submitStaffBtn').click(function () {
     
-    $.post('/api/staff/add', {
+    $.post('/api/staff1/add', {
         hid: $('#selectHostelsList').val(),
         salary: $('#salary').val(),
         name: $('#name').val()
@@ -38,23 +38,23 @@ $(function () {
           window.location.reload();
         }
         else {
-          console.log("could not add the staff right now")
+          console.log("could not add the staff1 right now")
         }
       })
 
   })
 
   // $('#viewAllStaffs').click(function () {
-  //   $.get('/api/staff/viewAll', function (data) {
+  //   $.get('/api/staff1/viewAll', function (data) {
   //     $('#listStaffs').empty()
   //
-  //     data.forEach((staff) => {
-  //       console.log(staff);
+  //     data.forEach((staff1) => {
+  //       console.log(staff1);
   //       $('#listStaffs').append(`<li>
-  //         Staff ID: ${staff.sid} |
-  //         Name: ${staff.name} |
-  //         Salary: ${staff.salary} |
-  //         Hostel ID: ${staff.hid}
+  //         Staff ID: ${staff1.sid} |
+  //         Name: ${staff1.name} |
+  //         Salary: ${staff1.salary} |
+  //         Hostel ID: ${staff1.hid}
   //       </li>`)
   //     })
   //   })
