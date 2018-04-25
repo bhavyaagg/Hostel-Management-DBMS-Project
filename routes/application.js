@@ -9,8 +9,17 @@ const applicationQueries = require('../db/queries/application');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-  db.query(applicationQueries.insertIntoTable(req.body.date, req.body.status, req.body.rollno)).then((data) => {
-    res.send("Application added");
+  if (!req.user) {
+    return res.status(401).send({
+      success: false,
+      error: "Unauthorized"
+    })
+  }
+  db.query(applicationQueries.insertIntoTable(req.body)).then((data) => {
+    res.send({
+      success: true,
+      data: data[0]
+    })
   }).catch(utils.errorFunction(req, res));
 })
 
