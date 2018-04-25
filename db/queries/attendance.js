@@ -4,10 +4,9 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS attendance(
-    rollno int check(rollNo > 0),
+    rollno VARCHAR(7) PRIMARY KEY,
     totalPresent int,
     totalDays int,
-    PRIMARY KEY (rollNo).
     FOREIGN KEY(rollno) references student(rollno)
   );
 `
@@ -16,6 +15,14 @@ const addAttendance = (rollno) => {
     return `
     UPDATE attendance SET totalPresent=totalPresent+1 , totalDays = totalDays + 1 where rollno='${rollno}'
     `
+}
+
+const selectOne = (rollno)=>{
+    return `SELECT * from attendance where rollno='${rollno}'`
+}
+
+const viewByHid=(hid)=>{
+    return `SELECT totalPresent,totalDays,attendance.rollno as rno,roomNumber from attendance,resident where attendance.rollno=resident.rno AND hid=${hid}`
 }
 
 const checkAttendance = (rollno) => {
@@ -37,6 +44,7 @@ const selectAll = `
   SELECT * FROM attendance;
 `
 
+
 const dropTable = `
   DROP TABLE IF EXISTS attendance;
 `
@@ -46,5 +54,7 @@ module.exports = {
     selectAll,
     dropTable,
     checkAttendance,
-    addAttendance
+    addAttendance,
+    selectOne,
+    viewByHid
 }

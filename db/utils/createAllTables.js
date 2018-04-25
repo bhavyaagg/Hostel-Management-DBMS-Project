@@ -15,9 +15,13 @@ db.query(queries.hostel.createTable).then((data) => {
           db.query(queries.wardens.createTable).then(() => {
             db.query(queries.inventory.createTable).then((data) => {
               db.query(queries.fines.createTable).then((data) => {
+                  db.query(queries.attendance.createTable).then((data) => {
+                      db.query(queries.resident.createTable).then((data) => {
 
-                  console.log("All tables created");
-                  process.exit();
+                          console.log("All tables created");
+                          process.exit();
+                      })
+                  })
               })
             })
           })

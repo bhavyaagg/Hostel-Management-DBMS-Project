@@ -463,7 +463,62 @@ $(function () {
       })
   })
 
-  $('#viewFines').click(() => {
+    $('#showAttendance').click(() => {
+        $.get('/api/attendance/viewOne')
+            .done((data) => {
+                if (data.success && data.data.length !== 0) {
+                    let attendance = data.data;
+                    console.log(attendance)
+                    $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewAllHostels" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <b>PRESENT</b>
+                      </div>
+                      <div class="col">
+                      <b>DAY COUNT</b>
+                      </div>                      
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+
+                        $('#noticeBoard').append(`
+              <li class="list-group-item">
+              <div class="row">
+                      <div class="col">
+                        ${attendance[0].totalpresent}
+                      </div>
+                      <div class="col">
+                        ${attendance[0].totaldays}
+                      </div>               
+                    </div>
+              </li>
+                        
+                      `)
+
+                } else {
+                    $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col text-capitalize text-danger">
+                  No Attendance Details
+                </div>
+              </div>
+            `)
+                }
+            })
+            .fail((err) => {
+                console.log(2)
+                console.log(err)
+            })
+    })
+
+    $('#viewFines').click(() => {
 
     $.get('/api/fines/viewSelect')
       .done((data) => {

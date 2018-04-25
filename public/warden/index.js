@@ -475,6 +475,180 @@ $(document).ready(() => {
       });
     })
   })
+  $('#viewFines').click(() => {
+    $.get('/api/fines/viewAll')
+      .done((data) => {
+        if (data.success) {
+          let fines = data.data;
+          console.log(fines)
+          $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewAllHostels" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <b>FID</b>
+                      </div>
+                      <div class="col">
+                      <b>Roll Number</b>
+                      </div>
+
+                      <div class="col">
+                      <b>Remark</b>
+                      </div>
+                      <div class="col">
+                      <b>Amount</b>
+                      </div>
+                      <div class="col">
+                      <b>Paid</b>
+                      </div>
+
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+          fines.forEach((fines) => {
+            $('#noticeBoard').append(`
+              <li class="list-group-item">
+              <div class="row">
+                      <div class="col">
+                        ${fines.fid}
+                      </div>
+                      <div class="col">
+                        ${fines.rollno}
+                      </div>
+
+                      <div class="col">
+                        ${fines.remark}
+                      </div>
+                      <div class="col">
+                        ${fines.amount}
+                      </div>
+                      <div class="col">
+                        ${fines.paid ? 'Yes' : 'No'}
+                      </div>
+                    </div>
+              </li>
+
+                      `)
+          })
+        } else {
+          console.log("Some error view inventory")
+        }
+      })
+      .fail((err) => {
+        console.log(2)
+        console.log(err)
+      })
+  })
+
+
+  $('#addAttendance').click(() => {
+    hid = localStorage.getItem('hid');
+    $.post('/api/attendance/viewByHid', {hid})
+      .done((data) => {
+        if (data.success) {
+          let attendance = data.data;
+          console.log(attendance)
+          $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewAllHostels" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <b>Roll Number</b>
+                      </div>
+                      <div class="col">
+                      <b>Room Number</b>
+                      </div>
+
+                      <div class="col">
+                      <b>Present</b>
+                      </div>
+                      <div class="col">
+                      <b>Total</b>
+                      </div>
+                      <div class="col">
+                      <b>Mark</b>
+                      </div>
+
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+
+          dat = {}
+          attendance.forEach((attendance, idx) => {
+
+            $('#noticeBoard').append(`
+              <li class="list-group-item">
+              <div class="row">
+                      <div class="col">
+                        ${attendance.rno}
+                      </div>
+                      <div class="col">
+                        ${attendance.roomnumber}
+                      </div>
+
+                      <div class="col">
+                        ${attendance.totalpresent}
+                      </div>
+                      <div class="col">
+                        ${attendance.totaldays}
+                      </div>
+                      <div class="col">
+                        <input id="cb${idx}" value="" type="checkbox">
+                      </div>
+                    </div>
+              </li>
+
+                      `)
+          })
+
+          $('#noticeBoard').append(`<button id="markAttendance" class="btn btn-info">Submit</button>`)
+
+          $('#markAttendance').click(() => {
+
+            attendance.forEach((attendance, idx) => {
+              rno = attendance.rno
+              if ($('#cb' + idx).checked) {
+                $.post("/api/attendance/add", {rno}).done(function (hostel) {
+                  if (hostel.success) {
+                    $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
+                  } else {
+                    console.log(2)
+                    console.log(hostel.error);
+                    $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
+                  }
+                }).fail(function (hostel) {
+                  console.log(hostel.responseJSON)
+                  if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                    $('#errorAddFine').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
+                  } else {
+                    $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Hostel2")
+                  }
+                });
+              }
+            })
+            $('#noticeBoard').empty();
+
+          })
+
+        } else {
+          console.log("Some error view inventory")
+        }
+      })
+      .fail((err) => {
+        console.log(2)
+        console.log(err)
+      })
+  })
 
 })
 

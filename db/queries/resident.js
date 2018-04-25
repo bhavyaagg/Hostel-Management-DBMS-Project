@@ -4,18 +4,35 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS resident(
-    iCardNo int check(iCardNo > 0),
-    rollno varchar(7),
-    PRIMARY KEY (iCardNo),
-    FOREIGN KEY (rollno) REFERENCES student(rollno) 
+    rno varchar(30) PRIMARY KEY,
+    roomNumber varchar(30),
+    hid int, 
+    FOREIGN KEY (rno) REFERENCES student(rollno),
+    FOREIGN KEY (hid) REFERENCES hostel(hid)
   );
 `
+
+const insertIntoTable = (resident) => {
+    return `
+    INSERT INTO resident values(
+      '${resident.rollNo}',
+      '${resident.roomNumber}',
+      '${applicant.hid}'
+    );
+  `
+}
+
+
 
 const dropTable = `
   DROP TABLE IF EXISTS resident;
 `
 
+
+
 module.exports = {
   createTable,
-  dropTable
+  dropTable,
+  insertIntoTable,
+
 }
