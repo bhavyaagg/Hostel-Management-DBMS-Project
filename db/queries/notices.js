@@ -5,16 +5,17 @@
 const createTable = `
   CREATE TABLE IF NOT EXISTS notices(
     title varchar(30) NOT NULL,
+    author varchar(20),
     desc varchar(300),
-    date DATE, 
+    date DATE,
     noticeid serial,
-    PRIMARY KEY (noticeid) 
+    PRIMARY KEY (noticeid)
   );
 `
 
-const insertIntoTable = (title, desc, date) => {
+const insertIntoTable = (title, author, desc, date) => {
     return `
-    INSERT INTO notices(title,desc,date) values(${title},'${desc}','${date}');
+    INSERT INTO notices(title,author,desc,date) values('${title}', '${author}','${desc}','${date}');
   `
 }
 

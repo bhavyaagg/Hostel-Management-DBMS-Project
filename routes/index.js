@@ -10,5 +10,5 @@ route.use('/application', require('./application'));
 route.use('/hostel', require('./hostel'));
 route.use('/staff', require('./staff'));
 route.use('/rooms', require('./rooms'));
-
+route.use('/notices', require('./notices'));
 module.exports = route;
