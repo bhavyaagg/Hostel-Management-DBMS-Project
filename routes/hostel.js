@@ -26,6 +26,17 @@ route.post('/add', function (req, res) {
   }).catch(utils.errorFunction(req, res));
 })
 
+
+route.post('/update/:id', (req, res) => {
+  db.query(hostelQueries.updateHostel(+req.params.id, req.body)).then((data) => {
+    res.send({
+      success: true,
+      data: data[0]
+    })
+  }).catch(utils.errorFunction(req, res));
+})
+
+
 route.get('/viewAll', (req, res) => {
   db.query(hostelQueries.selectAll).then((hostels) => {
     console.log(hostels)

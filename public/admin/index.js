@@ -74,6 +74,7 @@ $(document).ready(() => {
                         <b>Capacity</b>
                       </div> 
                       <div class="col">
+                        <b>Details</b>
                       </div> 
                     </div>
                     </li>
@@ -81,6 +82,10 @@ $(document).ready(() => {
                 </div>
               </div>
             `)
+
+          hostels.sort((a, b) => {
+            return a.hid - b.hid;
+          })
           hostels.forEach((hostel) => {
             $('#viewAllHostels').append(`
               <li class="list-group-item">
@@ -92,13 +97,64 @@ $(document).ready(() => {
                         ${hostel.capacity}
                       </div> 
                       <div class="col">
+                        <button data-id="${hostel.hid}" data-name="${hostel.name}" data-capacity="${hostel.capacity}" class="btn btn-sm btn-info updateHostelBtn">
+                          Update
+                        </button>
                         <button data-id="${hostel.hid}" data-name="${hostel.name}" data-capacity="${hostel.capacity}" class="btn btn-sm btn-info viewDetails">
-                          View Details
+                          View
                         </button>
                       </div> 
                     </div>
               </li>
             `)
+          })
+
+          $('.updateHostelBtn').click((e) => {
+            let name = e.currentTarget.getAttribute('data-name')
+            let capacity = e.currentTarget.getAttribute('data-capacity')
+            let hid = e.currentTarget.getAttribute('data-id')
+            $('#editName').val(name)
+            $('#editCapacity').val(capacity)
+
+            $('#modal').modal('show');
+
+            $('#editSubmitHostelBtn').off().click(() => {
+              let name = $('#editName').val();
+              let capacity = $('#editCapacity').val();
+
+
+              if (!name || name.length === 0 || name[0].toLowerCase() === name[0].toUpperCase()) {
+                $('#errorAddHostel').text("Please Enter Valid Name");
+                return;
+              }
+
+              if (!capacity || capacity <= 0) {
+                $('#errorAddHostel').text("Please Enter Valid Capacity(Capacity>0)");
+                return;
+              }
+
+              $.post(`/api/hostel/update/${hid}`, {
+                name,
+                capacity
+              }).done(function (hostel) {
+                if (hostel.success) {
+                  $('#errorEditHostel').removeClass('text-danger').addClass('text-success').text("Hostel Updated");
+                } else {
+                  console.log(2)
+                  console.log(hostel.error);
+                  $('#errorEditHostel').addClass("text-danger").removeClass('text-success').text("Some Error Update Hostel")
+                }
+              }).fail(function (hostel) {
+                console.log(hostel.responseJSON)
+                if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                  $('#errorEditHostel').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
+                } else {
+                  $('#errorEditHostel').addClass("text-danger").removeClass('text-success').text("Some Error Update Hostel2")
+                }
+              });
+            })
+
+
           })
 
           $('.viewDetails').click((e) => {

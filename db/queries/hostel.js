@@ -16,6 +16,12 @@ const insertIntoTable = (name, capacity) => {
   `
 }
 
+const updateHostel = (hid, data) => {
+  return `
+    UPDATE hostel SET name='${data.name}', capacity=${data.capacity} WHERE hid=${hid}; 
+  `
+}
+
 const selectAll = `
   SELECT * FROM hostel;
 `
@@ -27,6 +33,7 @@ const dropTable = `
 module.exports = {
   createTable,
   insertIntoTable,
+  updateHostel,
   selectAll,
   dropTable
 }
