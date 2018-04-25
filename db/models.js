@@ -12,8 +12,25 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   port: dbConfig.PORT
 });
 
-db.sync({force: true}).then(() => {
+const User = db.define('user', {
+  username: {
+    type: Sequelize.DataTypes.STRING(25),
+    unique: true,
+    allowNull: false,
+  },
+  password: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: false,
+  }
+})
+
+db.sync({force: false}).then(() => {
   console.log("Database Configured");
 })
 
-module.exports = db;
+module.exports = {
+  db,
+  models: {
+    User
+  }
+};

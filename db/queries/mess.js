@@ -8,7 +8,7 @@ const createTable = `
     hid int,
     name varchar(20) NOT NULL,
     FOREIGN KEY hid REFERENCES hostel(hid)
-  );
+  );2
 `
 
 const dropTable = `

@@ -2,7 +2,7 @@
  * Created by bhavyaagg on 08/04/18.
  */
 
-const db = require('./../models');
+const db = require('./../models').db;
 const queries = require('../queries');
 
 db.query(queries.staff.dropTable).then((data) => {
