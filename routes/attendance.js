@@ -9,7 +9,7 @@ const attendanceQueries = require('../db/queries/attendance');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-    db.query(attendanceQueries.insertIntoTable(req.body.rollno, req.body.remark, req.body.amt )).then((data) => {
+    db.query(attendanceQueries.addAttendance(req.body.rno)).then((data) => {
 
         res.send({
             success: true
@@ -44,6 +44,16 @@ route.get('/viewSelect',(req,res)=>{
         })
     }).catch(utils.errorFunction(req, res))
 })
+
+route.post('/viewByHid',(req,res)=>{
+    db.query(attendanceQueries.viewByHid(req.body.hid)).then((attendance) => {
+        res.send({
+            success: true,
+            data: attendance[0]
+        })
+    }).catch(utils.errorFunction(req, res))
+})
+
 
 
 module.exports = route;

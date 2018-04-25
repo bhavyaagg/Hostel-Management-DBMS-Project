@@ -21,6 +21,10 @@ const selectOne = (rollno)=>{
     return `SELECT * from attendance where rollno='${rollno}'`
 }
 
+const viewByHid=(hid)=>{
+    return `SELECT totalPresent,totalDays,attendance.rollno as rno,roomNumber from attendance,resident where attendance.rollno=resident.rno AND hid=${hid}`
+}
+
 const checkAttendance = (rollno) => {
     return `
    BEGIN
@@ -52,5 +56,5 @@ module.exports = {
     checkAttendance,
     addAttendance,
     selectOne,
-    select
+    viewByHid
 }
