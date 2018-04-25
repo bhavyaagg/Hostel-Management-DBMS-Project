@@ -25,6 +25,14 @@ route.post('/authorize', function (req, res) {
   }).catch(utils.errorFunction(req, res));
 })
 
+route.post('/add', function (req, res) {
+  db.query(wardenQueries.insertIntoTable(req.body.username, req.body.name, req.body.hid, req.body.password)).then((data) => {
+    res.send({
+      success: true
+    });
+  }).catch(utils.errorFunction(req, res));
+})
+
 route.post('/update', function (req, res) {
   if (!req.user) {
     return res.status(401).send({

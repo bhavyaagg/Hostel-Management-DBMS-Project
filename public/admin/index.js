@@ -251,4 +251,109 @@ $(document).ready(() => {
         console.log(err)
       })
   })
+
+
+  $('#addHostelStaff').click(() => {
+    $('#errorRegister').text("");
+    $.get('/api/hostel/viewAll').done((data) => {
+      if (data.success && data.data.length !== 0) {
+        let hostels = data.data;
+        $('#noticeBoard').empty().css('display', 'block').append(`
+                <div class="form-group">
+                  <input id="registerName" required type="text" class="form-control input"
+                         placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                  <input id="registerUsername" required type="text" class="form-control input"
+                         placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <input id="registerPassword" required type="password" class="form-control input"
+                         placeholder="Password">
+                </div>
+                
+                <select id="hid" class="custom-select">
+                </select>
+                
+                <div id="errorRegister" class="text-danger text-capitalize">
+                </div>
+                <div class="form-group mt-3">
+                  <button id="addStaffBtn" class="btn btn-lg btn-block btn-info btn-style">
+                    Add
+                  </button>
+                </div>            
+    `)
+
+        hostels.sort((a, b) => {
+          return a.hid - b.hid;
+        })
+
+        hostels.forEach((hostel) => {
+          $('#hid').append(`
+            <option value="${hostel.hid}">${hostel.name}</option>
+          `)
+        })
+
+        $('#addStaffBtn').click(() => {
+
+          let name = $('#registerName').val();
+          let username = $('#registerUsername').val();
+          let password = $('#registerPassword').val();
+          let hid = $('#hid').val();
+
+          if (!name || name.length === 0 || name[0].toLowerCase() === name[0].toUpperCase()) {
+            $('#errorRegister').removeClass('text-success').addClass('text-danger').text("Please Enter Valid Name");
+            return;
+          }
+
+          if (!username || username.length === 0 || username[0].toLowerCase() === username[0].toUpperCase()) {
+            $('#errorRegister').removeClass('text-success').addClass('text-danger').text("Incorrect Username");
+            return;
+          }
+
+          if (!password || password.length < 6) {
+            $('#errorRegister').removeClass('text-success').addClass('text-danger').text("Password should have a minimum of 6 characters");
+            return;
+          }
+
+          if (!hid) {
+            $('#errorRegister').removeClass('text-success').addClass('text-danger').text("Please Select The Hostel Option");
+            return;
+          }
+
+          $.post("/api/warden/add", {
+            name,
+            username,
+            password,
+            hid
+          }).done(function (warden) {
+            if (warden.success) {
+              $('#errorRegister').removeClass('text-danger').addClass('text-success').text("Registration Successful. Warden Added");
+            } else {
+              console.log(2)
+              console.log(student.error);
+              $('#errorRegister').text("")
+            }
+          }).fail(function (student) {
+            console.log(student.responseJSON)
+            if (student.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+              $('#errorRegister').text(`${student.responseJSON.error.errors[0].type}! ${student.responseJSON.error.errors[0].message}`)
+            } else {
+              $('#errorRegister').text('Other Error');
+            }
+          });
+
+
+        })
+      } else {
+        $('#noticeBoard').empty().css('display', 'block').append(`
+          <div class="text-danger">
+            No Hostels
+          </div>
+        `)
+      }
+    })
+
+
+  })
 })

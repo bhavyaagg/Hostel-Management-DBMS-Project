@@ -6,7 +6,7 @@ const createTable = `
   CREATE TABLE IF NOT EXISTS warden(
     username varchar(30) PRIMARY KEY,
     name varchar(40),
-    hid int,
+    hid int UNIQUE,
     password varchar(20),
     FOREIGN KEY(hid) references hostel(hid)
   );
@@ -18,10 +18,16 @@ const getWarden = (username, password) => {
   `
 }
 
+const getWardenFromHostelID = (hid) => {
+  return `
+    SELECT * FROM warden WHERE hid=${hid};
+  `
+}
+
 const
   insertIntoTable = (username, name, hid, password) => {
     return `
-    INSERT INTO wardens VALUES ('${username}','${name}','${hid}','${password}')
+    INSERT INTO warden VALUES ('${username}','${name}','${hid}','${password}')
     `
   }
 
@@ -38,5 +44,6 @@ module.exports = {
   insertIntoTable,
   getWarden,
   selectAll,
-  dropTable
+  dropTable,
+  getWardenFromHostelID
 }
