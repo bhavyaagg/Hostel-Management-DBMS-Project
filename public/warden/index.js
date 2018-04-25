@@ -161,17 +161,14 @@ $(document).ready(() => {
                              placeholder="Roll Number">
           </div>
           <div class="form-group">
-            <input id="remark" required type="number" class="form-control input"
+            <input id="remark" required type="text" class="form-control input"
                              placeholder="Remark">
           </div>
           <div class="form-group">
             <input id="amt" required type="number" class="form-control input"
                              placeholder="Amount">
           </div>
-          <div class="form-group">
-            Is Paid: <input id="paid" required type="checkbox" class="form-control input"
-                             placeholder="Quantity">
-          </div>
+          
           <div id="errorAddFine" class="text-danger text-capitalize">
             
           </div>
@@ -179,32 +176,38 @@ $(document).ready(() => {
         `);
 
         $('#submitInventoryBtn').click(() => {
-            let hid = +localStorage.getItem('hid')
-            let name = $('#itemName').val();
-            let qty = $('#qty').val()
-
-            console.log(hid)
-            console.log(name)
-            console.log(qty)
+            let rollno = $('#rno').val();
+            let remark = $('#remark').val();
+            let amt = $('#amt').val()
 
 
-            if (!qty || qty <= 0) {
-                $('#errorAddFine').text("Please Enter Valid Quantity(Quantity>0)");
+            console.log(rollno)
+            console.log(remark)
+            console.log(amt)
+
+
+            if (!rollno || rollno.length <= 6 || rollno.length > 7) {
+                $('#errorAddFine').text("Incorrect Roll Number");
+                return;
+            }
+
+            if (!amt || amt <= 0) {
+                $('#errorAddFine').text("Please Enter Valid Amount(Amount>0)");
                 return;
             }
 
 
-            $.post("/api/inventory/add", {
-                name,
-                hid,
-                qty
+            $.post("/api/fines/add", {
+                rollno,
+                remark,
+                amt
             }).done(function (hostel) {
                 if (hostel.success) {
-                    $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Inventory Added");
+                    $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
                 } else {
                     console.log(2)
                     console.log(hostel.error);
-                    $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Inventory")
+                    $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
                 }
             }).fail(function (hostel) {
                 console.log(hostel.responseJSON)
@@ -217,12 +220,12 @@ $(document).ready(() => {
         })
     })
 
-    $('#viewInventory').click(() => {
-        $.get('/api/inventory/viewAll')
+    $('#viewFines').click(() => {
+        $.get('/api/fines/viewAll')
             .done((data) => {
                 if (data.success) {
-                    let inventory = data.data;
-                    console.log(inventory)
+                    let fines = data.data;
+                    console.log(fines)
                     $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col">
@@ -230,46 +233,51 @@ $(document).ready(() => {
                     <li class="list-group-item">
                     <div class="row">
                       <div class="col">
-                        <b>EMID</b>
+                        <b>FID</b>
                       </div>
                       <div class="col">
-                      <b>HOSTEL NAME</b>
-                      </div> 
-                      
+                      <b>Roll Number</b>
+                      </div>
+
                       <div class="col">
-                      <b>ITEM NAME</b>
-                      </div> 
+                      <b>Remark</b>
+                      </div>
                       <div class="col">
-                      <b>QUANTITY</b>
-                      </div> 
-                      
-                      
+                      <b>Amount</b>
+                      </div>
+                      <div class="col">
+                      <b>Paid</b>
+                      </div>
+
                     </div>
                     </li>
                   </ul>
                 </div>
               </div>
             `)
-                    inventory.forEach((inventory) => {
+                    fines.forEach((fines) => {
                         $('#noticeBoard').append(`
               <li class="list-group-item">
               <div class="row">
                       <div class="col">
-                        ${inventory.emid}
+                        ${fines.fid}
                       </div>
                       <div class="col">
-                        ${inventory.hname}
+                        ${fines.rollno}
                       </div>
-                      
+
                       <div class="col">
-                        ${inventory.name}
-                      </div> 
+                        ${fines.remark}
+                      </div>
                       <div class="col">
-                        ${inventory.qty}
-                      </div> 
+                        ${fines.amount}
+                      </div>
+                      <div class="col">
+                        ${fines.paid?'Yes':'No'}
+                      </div>
                     </div>
               </li>
-                        
+
                       `)
                     })
                 } else {
@@ -281,5 +289,44 @@ $(document).ready(() => {
                 console.log(err)
             })
     })
+    $('#clearFines').click(() => {
+        $('#noticeBoard').empty().css('display', 'block').append(`
+          <div class="form-group">
+            <input id="fid" required type="number" class="form-control input"
+                             placeholder="Enter FID">
+          </div>
+          
+          
+          <div id="errorClearFine" class="text-danger text-capitalize">
+            
+          </div>
+          <button id="submitClearFineBtn" class="btn btn-success">Submit</button>
+        `);
+
+        $('#submitClearFineBtn').click(() => {
+            let fid = $('#fid').val();
+
+            console.log(2)
+            $.post("/api/fines/clear", {
+                fid
+            }).done(function (hostel) {
+                if (hostel.success) {
+                    $('#errorClearFine').removeClass('text-danger').addClass('text-success').text("Fine Cleared");
+                } else {
+                    console.log(2)
+                    console.log(hostel.error);
+                    $('#errorClearFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
+                }
+            }).fail(function (hostel) {
+                console.log(hostel.responseJSON)
+                if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                    $('#errorClearFine').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
+                } else {
+                    $('#errorClearFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Hostel2")
+                }
+            });
+        })
+    })
+
 })
 

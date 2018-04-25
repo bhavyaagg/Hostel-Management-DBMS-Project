@@ -9,7 +9,8 @@ const finesQueries = require('../db/queries/fines');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-    db.query(finesQueries.insertIntoTable(req.body.name, req.body.hid, req.body.qtynode )).then((data) => {
+    db.query(finesQueries.insertIntoTable(req.body.rollno, req.body.remark, req.body.amt )).then((data) => {
+
         res.send({
             success: true
         });
@@ -26,8 +27,8 @@ route.get('/viewAll', (req, res) => {
     }).catch(utils.errorFunction(req, res))
 })
 
-route.get('/clear',(req,res)=>{
-    db.query(finesQueries.selectAll).then((fines) => {
+route.post('/clear',(req,res)=>{
+    db.query(finesQueries.clearFine(req.body.fid)).then((fines) => {
         res.send({
             success: true,
             data: fines[0]

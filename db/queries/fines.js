@@ -5,23 +5,23 @@
 const createTable = `
   CREATE TABLE IF NOT EXISTS fines(
     fid SERIAL PRIMARY KEY,
-    rollNo int check(rollNo > 0),
+    rollno varchar(7),
     remark varchar(30) NOT NULL,
     amount int check(amount>=0),
     paid boolean,
-    PRIMARY KEY (rollNo) 
+    Foreign Key(rollno) references student(rollno)
   );
 `
 
 const insertIntoTable = (rollno, remark, amount) => {
     return `
-    INSERT INTO fines values(${rollno},'${remark}','${amount}','0');
+    INSERT INTO fines(rollno,remark,amount,paid) values('${rollno}','${remark}',${amount},'0');
   `
 }
 
 const clearFine = (fid)=>{
     return `
-    UPDATE fines SET paid='1' where fid='${fid}'
+    UPDATE fines SET paid='1' where fid=${fid}
     `
 }
 
