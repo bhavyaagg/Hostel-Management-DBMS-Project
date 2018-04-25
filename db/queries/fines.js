@@ -4,6 +4,7 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS fines(
+    fid SERIAL PRIMARY KEY,
     rollNo int check(rollNo > 0),
     remark varchar(30) NOT NULL,
     amount int check(amount>=0),
@@ -18,9 +19,9 @@ const insertIntoTable = (rollno, remark, amount) => {
   `
 }
 
-const clearFine = (rollno)=>{
+const clearFine = (fid)=>{
     return `
-    UPDATE fines SET paid='1' where rollNo='${rollno}'
+    UPDATE fines SET paid='1' where fid='${fid}'
     `
 }
 
