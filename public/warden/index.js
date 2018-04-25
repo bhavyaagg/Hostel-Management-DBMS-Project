@@ -3,6 +3,152 @@
  */
 $(document).ready(() => {
 
+  $('#viewApplications').click(() => {
+    let hid = localStorage.getItem("hid")
+    if (!hid) {
+      console.log("No HID in LS");
+      return;
+    }
+
+    $.get(`/api/application/hostel/${hid}`).done((data) => {
+      if (data.success) {
+        $.get(`/api/hostel/details/${hid}`)
+          .done((hostelData) => {
+            let rooms = hostelData.data;
+            let roomsDict = {};
+            rooms.forEach((room) => {
+              roomsDict[room.roomno] = room.vacant;
+            })
+
+            let applications = data.data;
+            applications.sort((a, b) => {
+              if (a.pwd && !b.pwd) {
+                return -1;
+              } else if (!a.pwd && b.pwd) {
+                return 1;
+              } else {
+                if (a.outsidedelhi && !b.outsidedelhi) {
+                  return -1;
+                } else if (!a.outsidedelhi && b.outsidedelhi) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              }
+            })
+            console.log(applications)
+
+            $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewAllApplications" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row text-center">
+                      <div class="col">
+                        <b>Roll Number</b>
+                      </div>
+                      <div class="col">
+                      <b>PWD</b>
+                      </div>
+
+                      <div class="col">
+                      <b>Outside Delhi</b>
+                      </div>
+                      <div class="col">
+                      <b>Room1</b>
+                      </div>
+                      <div class="col">
+                      <b>Room2</b>
+                      </div>
+                      <div class="col">
+                      <b>Room3</b>
+                      </div>
+                      <div class="col">
+                      <b>Actions</b>
+                      </div>
+
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+
+            applications.forEach((application) => {
+              let pref = 0;
+              if (roomsDict[application.roompreference3]) {
+                pref = application.roompreference3;
+              } else {
+                application.roompreference3 = "-";
+              }
+              if (roomsDict[application.roompreference2]) {
+                pref = application.roompreference2;
+              } else {
+                application.roompreference2 = "-";
+              }
+              if (roomsDict[application.roompreference1]) {
+                pref = application.roompreference1;
+              } else {
+                application.roompreference1 = "-";
+              }
+
+              $('#viewAllApplications').append(`
+                  <li class="list-group-item">
+                    <div class="row text-center">
+                      <div class="col">
+                        ${application.rollno}
+                      </div>
+                      <div class="col">
+                      ${application.pwd ? "Yes" : "No"}
+                      </div>
+
+                      <div class="col">
+                      ${application.outsidedelhi ? "Yes" : "No"}
+                      </div>
+                      <div class="col">
+                      ${application.roompreference1}
+                      </div>
+                      <div class="col">
+                      ${application.roompreference2}
+                      </div>
+                      <div class="col">
+                      ${application.roompreference3}
+                      </div>
+                      <div class="col">
+                        <button data-room="pref" data-id="${application.aid}" class="btn btn-success allotBtn">Allot</button>
+                        <button data-id="${application.aid}" class="btn btn-danger rejectBtn">Reject</button>
+                      </div>
+                    </div>
+                    </li>
+              `)
+            })
+
+            $('.allotBtn').click((e) => {
+              let aid = e.currentTarget.getAttribute('data-id');
+              let pref = e.currentTarget.getAttribute('data-pref');
+              $.post('/api/application/allot', {
+                aid,
+                pref,
+                hid,
+                rollno
+              }).done((data) => {
+
+              }).fail((data) => {
+
+              })
+            })
+
+          })
+
+
+      } else {
+        console.log("Error Get Applications")
+      }
+    }).fail((err) => {
+      console.log("Fail get applications")
+    })
+  })
+
   $('#loginButton').click(() => {
 
     let username = $('#loginUsername').val();
@@ -154,6 +300,7 @@ $(document).ready(() => {
         console.log(err)
       })
   })
+
   $('#addFine').click(() => {
     $('#noticeBoard').empty().css('display', 'block').append(`
           <div class="form-group">
@@ -289,6 +436,7 @@ $(document).ready(() => {
         console.log(err)
       })
   })
+
   $('#clearFines').click(() => {
     $('#noticeBoard').empty().css('display', 'block').append(`
           <div class="form-group">

@@ -6,6 +6,7 @@ const express = require('express')
 const route = express.Router();
 const db = require('../db/models').db;
 const applicationQueries = require('../db/queries/application');
+const roomQueries = require('../db/queries/rooms');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
@@ -28,6 +29,14 @@ route.post('/add', function (req, res) {
   }).catch(utils.errorFunction(req, res));
 })
 
+route.post('/allot', (req, res) => {
+  db.query(applicationQueries.allotApplication(req.body.aid)).then(() => {
+    db.query(roomQueries.allotRoom(req.body.pref)).then(() => {
+      db.query()
+    })
+  })
+})
+
 route.get('/exists', (req, res) => {
   if (!req.user) {
     return res.status(401).send({
@@ -43,6 +52,17 @@ route.get('/exists', (req, res) => {
   }).catch(utils.errorFunction(req, res))
 
 })
+
+
+route.get('/hostel/:id', (req, res) => {
+  db.query(applicationQueries.getFromHID(+req.params.id)).then((applications) => {
+    res.send({
+      success: true,
+      data: applications[0]
+    })
+  }).catch(utils.errorFunction(req, res));
+})
+
 
 route.get('/viewAll', (req, res) => {
   db.query(applicationQueries.selectAll).then((applications) => {

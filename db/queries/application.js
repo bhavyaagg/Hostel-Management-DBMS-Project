@@ -32,6 +32,18 @@ const checkIfExists = (rollno) => {
   `
 }
 
+const getFromHID = (hid) => {
+  return `
+    SELECT * FROM application inner join student ON application.rollno = student.rollno WHERE hid=${hid} AND status='WAITLISTED';
+  `
+}
+
+const allotApplication = (aid) => {
+  return `
+    UPDATE application SET status='ALLOTTED' WHERE aid=${aid};
+  `
+}
+
 const selectAll = `
   SELECT * FROM application;
 `
@@ -45,5 +57,7 @@ module.exports = {
   insertIntoTable,
   selectAll,
   dropTable,
-  checkIfExists
+  checkIfExists,
+  getFromHID,
+  allotApplication
 }
