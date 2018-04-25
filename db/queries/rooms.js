@@ -4,17 +4,18 @@
 
 const createTable = `
   CREATE TABLE IF NOT EXISTS rooms(
-    rid SERIAL PRIMARY KEY,
     roomno varchar(30),
     floor int,
     hid int,
-    FOREIGN KEY(hid) references hostel(hid)
+    vacant boolean DEFAULT '1',
+    FOREIGN KEY(hid) references hostel(hid),
+    PRIMARY KEY(roomno, hid)
   );
 `
 
-const insertIntoTable = (roomno, floor, hid) => {
+const insertIntoTable = (data) => {
   return `
-    INSERT INTO rooms(roomno, floor, hid) values('${roomno}',${floor},${hid});
+    INSERT INTO rooms(roomno, floor, hid) values('${data.roomno}',${data.floor},${data.hid});
   `
 }
 

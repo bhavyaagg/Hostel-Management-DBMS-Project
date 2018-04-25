@@ -92,7 +92,7 @@ $(document).ready(() => {
                         ${hostel.capacity}
                       </div> 
                       <div class="col">
-                        <button data-id="${hostel.hid}" class="btn btn-sm btn-info viewDetails">
+                        <button data-id="${hostel.hid}" data-name="${hostel.name}" data-capacity="${hostel.capacity}" class="btn btn-sm btn-info viewDetails">
                           View Details
                         </button>
                       </div> 
@@ -102,13 +102,88 @@ $(document).ready(() => {
           })
 
           $('.viewDetails').click((e) => {
+            let name = e.currentTarget.getAttribute('data-name')
+            let capacity = e.currentTarget.getAttribute('data-capacity')
             let hid = e.currentTarget.getAttribute('data-id')
             $.get(`/api/hostel/details/${hid}`)
-              .done(() => {
+              .done((data) => {
+                if (data.success) {
+                  console.log(data.data)
+                  let rooms = data.data;
 
+
+                  $('#noticeBoard').css('display', 'block').empty().append(
+                    `
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul class="list-group">
+                    <li class="list-group-item">Name</li>
+                    <li class="list-group-item">Capacity</li>
+                    <li class="list-group-item">Number of Vacant Rooms</li>
+                  </ul>
+                </div>
+                <div class="col">
+                  <ul id="listDetails" class="list-group">
+                  <li class="list-group-item">${name}</li>
+                  <li class="list-group-item">${capacity}</li>
+                  <li id="noOfVacantRooms" class="list-group-item"></li>                  
+                  </ul>
+                </div>
+              </div>
+            `).append(`
+              <div class="row no-gutters">
+                <div class="col">
+                  <ul id="viewHostelRooms" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <b>Room Number</b>
+                      </div>
+                      <div class="col">
+                        <b>Floor</b>
+                      </div> 
+                      <div class="col">
+                        <b>Vacancy</b>
+                      </div> 
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+                  let notVacantRooms = 0;
+                  rooms.forEach((room) => {
+                    if (!room.vacant) {
+                      notVacantRooms++;
+                    }
+                    $('#viewHostelRooms').append(`
+                      <li class="list-group-item">
+                        <div class="row">
+                      <div class="col">
+                        ${room.roomno}
+                      </div>
+                      <div class="col">
+                        ${room.floor}
+                      </div> 
+                      <div class="col">
+                        ${room.vacant}
+                      </div> 
+                    </div>
+              </li>
+            `)
+                  })
+
+                  $('#noOfVacantRooms').append(`
+                    ${capacity - notVacantRooms}
+                  `);
+                } else {
+                  console.log(12)
+                  console.log(err)
+                }
               })
               .fail(() => {
-
+                console.log(21)
+                console.log(err)
               })
           })
         } else {

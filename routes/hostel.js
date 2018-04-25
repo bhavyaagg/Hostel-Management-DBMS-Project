@@ -11,8 +11,11 @@ const utils = require('../utils');
 
 route.get('/details/:id', (req, res) => {
   db.query(roomQueries.getDetailsFromHid(+req.params.id)).then((data) => {
-    console.log(data);
-  })
+    res.send({
+      success: true,
+      data: data[0]
+    })
+  }).catch(utils.errorFunction(req, res));
 })
 
 route.post('/add', function (req, res) {
