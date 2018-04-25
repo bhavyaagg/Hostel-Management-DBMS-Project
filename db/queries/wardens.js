@@ -3,7 +3,7 @@
  */
 
 const createTable = `
-  CREATE TABLE IF NOT EXISTS wardens(
+  CREATE TABLE IF NOT EXISTS warden(
     username varchar(30) PRIMARY KEY,
     name varchar(40),
     hid int,
@@ -12,11 +12,18 @@ const createTable = `
   );
 `
 
-const insertIntoTable = (username,name,hid,password) => {
-    return `
-    INSERT INTO wardens(name,hid,password) VALUES ('${username}','${name}','${hid}','${password}')
-    `
+const getWarden = (username, password) => {
+  return `
+    SELECT hid FROM warden WHERE username='${username}' AND password='${password}';
+  `
 }
+
+const
+  insertIntoTable = (username, name, hid, password) => {
+    return `
+    INSERT INTO wardens VALUES ('${username}','${name}','${hid}','${password}')
+    `
+  }
 
 const selectAll = `
   SELECT * FROM wardens;
@@ -27,8 +34,9 @@ const dropTable = `
 `
 
 module.exports = {
-    createTable,
-    insertIntoTable,
-    selectAll,
-    dropTable
+  createTable,
+  insertIntoTable,
+  getWarden,
+  selectAll,
+  dropTable
 }
