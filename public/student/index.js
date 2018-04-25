@@ -45,7 +45,6 @@ $(function () {
 
 
   $('#showStudentDetails').click(() => {
-    console.log(1)
     $.get('/api/student/mydetails')
       .done((data) => {
         if (data.success) {
@@ -95,6 +94,28 @@ $(function () {
         console.log(err)
       })
   })
+
+  $('#apply').click(() => {
+    $.get('/api/hostel/viewAll')
+      .done((data) => {
+        if (data.success) {
+          let hostels = data.data;
+          $('#noticeBoard').empty().css('display', 'block')
+          hostels.forEach((hostel) => {
+            $('#noticeBoard').append(`
+              
+            `)
+          })
+        } else {
+          console.log("Some error apply")
+        }
+      })
+      .fail((err) => {
+        console.log(2)
+        console.log(err)
+      })
+  })
+
   // $('#viewAllstudents').click(function () {
   //   $.get('/api/student/viewAll', function (data) {
   //     $('#liststudents').empty()
