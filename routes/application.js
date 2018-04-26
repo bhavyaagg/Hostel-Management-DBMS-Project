@@ -7,6 +7,7 @@ const route = express.Router();
 const db = require('../db/models').db;
 const applicationQueries = require('../db/queries/application');
 const roomQueries = require('../db/queries/rooms');
+const residentQueries = require('../db/queries/resident');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
@@ -30,11 +31,31 @@ route.post('/add', function (req, res) {
 })
 
 route.post('/allot', (req, res) => {
+  if (+req.body.pref === 0) {
+    return res.send({
+      success: false,
+      url: '/api/application/reject',
+      error: "Cant Allot Since No Room Defined"
+    })
+  }
   db.query(applicationQueries.allotApplication(req.body.aid)).then(() => {
     db.query(roomQueries.allotRoom(req.body.pref)).then(() => {
-      db.query()
+      req.body.roomno = req.body.pref;
+      db.query(residentQueries.insertIntoTable(req.body)).then(() => {
+        res.send({
+          success: true
+        })
+      })
     })
-  })
+  }).catch(utils.errorFunction(req, res));
+})
+
+route.post('/reject', (req, res) => {
+  db.query(applicationQueries.rejectApplication(+req.body.aid)).then(() => {
+    res.send({
+      success: true
+    })
+  }).catch(utils.errorFunction(req, res));
 })
 
 route.get('/exists', (req, res) => {

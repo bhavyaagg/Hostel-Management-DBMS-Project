@@ -40,7 +40,7 @@ $(document).ready(() => {
 
             $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
-                <div class="col">
+                <div class="col-12">
                   <ul id="viewAllApplications" class="list-group">
                     <li class="list-group-item">
                     <div class="row text-center">
@@ -115,28 +115,65 @@ $(document).ready(() => {
                       ${application.roompreference3}
                       </div>
                       <div class="col">
-                        <button data-room="pref" data-id="${application.aid}" class="btn btn-success allotBtn">Allot</button>
+                        <button data-rollno="${application.rollno}" data-room="${pref}" data-id="${application.aid}" class="btn btn-success allotBtn">Allot</button>
                         <button data-id="${application.aid}" class="btn btn-danger rejectBtn">Reject</button>
                       </div>
                     </div>
                     </li>
               `)
-            })
 
-            $('.allotBtn').click((e) => {
-              let aid = e.currentTarget.getAttribute('data-id');
-              let pref = e.currentTarget.getAttribute('data-pref');
-              $.post('/api/application/allot', {
-                aid,
-                pref,
-                hid,
-                rollno
-              }).done((data) => {
+              $('#noticeBoard').append(`
+                <div class="row no-gutters">
+                <div id="errorApplications" class="col-12 text-danger text-capitalize">
+                </div>
+                </div>
+              `)
 
-              }).fail((data) => {
+              $('.allotBtn').off();
+
+              $('.allotBtn').click((e) => {
+                let aid = e.currentTarget.getAttribute('data-id');
+                let pref = e.currentTarget.getAttribute('data-room');
+                let rollno = e.currentTarget.getAttribute('data-rollno');
+                $.post('/api/application/allot', {
+                  aid,
+                  pref,
+                  hid,
+                  rollno
+                }).done((data) => {
+                  if (!data.success && data.url) {
+                    $('#errorApplications').append(`
+                      Can not allot the room since no preference is specified. Rejecting automatically.
+                    `)
+
+                    $.post(data.url, {
+                      aid
+                    }).done((data) => {
+                      console.log(data)
+                    }).fail((err) => {
+                      console.log(err);
+                    })
+                  }
+                }).fail((data) => {
+
+                })
+              })
+
+              $('.rejectBtn').off();
+
+              $('.rejectBtn').click((e) => {
+                let aid = e.currentTarget.getAttribute('data-id');
+                $.post('/api/application/reject', {
+                  aid
+                }).done((data) => {
+                  console.log(data)
+                }).fail((err) => {
+                  console.log(err);
+                })
 
               })
             })
+
 
           })
 
@@ -475,76 +512,6 @@ $(document).ready(() => {
       });
     })
   })
-  $('#viewFines').click(() => {
-    $.get('/api/fines/viewAll')
-      .done((data) => {
-        if (data.success) {
-          let fines = data.data;
-          console.log(fines)
-          $('#noticeBoard').empty().css('display', 'block').append(`
-              <div class="row no-gutters">
-                <div class="col">
-                  <ul id="viewAllHostels" class="list-group">
-                    <li class="list-group-item">
-                    <div class="row">
-                      <div class="col">
-                        <b>FID</b>
-                      </div>
-                      <div class="col">
-                      <b>Roll Number</b>
-                      </div>
-
-                      <div class="col">
-                      <b>Remark</b>
-                      </div>
-                      <div class="col">
-                      <b>Amount</b>
-                      </div>
-                      <div class="col">
-                      <b>Paid</b>
-                      </div>
-
-                    </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            `)
-          fines.forEach((fines) => {
-            $('#noticeBoard').append(`
-              <li class="list-group-item">
-              <div class="row">
-                      <div class="col">
-                        ${fines.fid}
-                      </div>
-                      <div class="col">
-                        ${fines.rollno}
-                      </div>
-
-                      <div class="col">
-                        ${fines.remark}
-                      </div>
-                      <div class="col">
-                        ${fines.amount}
-                      </div>
-                      <div class="col">
-                        ${fines.paid ? 'Yes' : 'No'}
-                      </div>
-                    </div>
-              </li>
-
-                      `)
-          })
-        } else {
-          console.log("Some error view inventory")
-        }
-      })
-      .fail((err) => {
-        console.log(2)
-        console.log(err)
-      })
-  })
-
 
   $('#addAttendance').click(() => {
     hid = localStorage.getItem('hid');

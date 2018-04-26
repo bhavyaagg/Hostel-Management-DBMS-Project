@@ -44,6 +44,12 @@ const allotApplication = (aid) => {
   `
 }
 
+const rejectApplication = (aid) => {
+  return `
+    UPDATE application SET status='REJECTED' WHERE aid=${aid};
+  `
+}
+
 const selectAll = `
   SELECT * FROM application;
 `
@@ -59,5 +65,6 @@ module.exports = {
   dropTable,
   checkIfExists,
   getFromHID,
-  allotApplication
+  allotApplication,
+  rejectApplication
 }
