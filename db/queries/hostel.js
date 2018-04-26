@@ -22,6 +22,12 @@ const updateHostel = (hid, data) => {
   `
 }
 
+const getFromID = (hid) => {
+  return `
+    SELECT * FROM hostel WHERE hid=${hid};
+  `
+}
+
 const selectAll = `
   SELECT * FROM hostel;
 `
@@ -35,5 +41,6 @@ module.exports = {
   insertIntoTable,
   updateHostel,
   selectAll,
-  dropTable
+  dropTable,
+  getFromID
 }

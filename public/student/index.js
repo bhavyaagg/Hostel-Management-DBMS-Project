@@ -158,11 +158,26 @@ $(function () {
   })
 
   $('#apply').click(() => {
-    $.get('/api/hostel/viewAll')
+    $.get('/api/application/exists')
       .done((data) => {
         if (data.success) {
-          let hostels = data.data;
-          $('#noticeBoard').empty().css('display', 'block').append(`
+          $.get(`/api/hostel/details/${data.data[0].hid}`)
+            .done((hostelData) => {
+              console.log(hostelData)
+              $('#noticeBoard').css('display', 'block').empty().append(`
+            <div class="row">
+              <div class="col">
+                You have already applied for Hostel ${hostelData.hostelData[0].name}  
+              </div>
+            </div>
+          `)
+            })
+        } else {
+          $.get('/api/hostel/viewAll')
+            .done((data) => {
+              if (data.success) {
+                let hostels = data.data;
+                $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col">
                   <ul id="viewAllHostels" class="list-group">
@@ -184,11 +199,11 @@ $(function () {
               </div>
             `)
 
-          hostels.sort((a, b) => {
-            return a.hid - b.hid;
-          })
-          hostels.forEach((hostel) => {
-            $('#viewAllHostels').append(`
+                hostels.sort((a, b) => {
+                  return a.hid - b.hid;
+                })
+                hostels.forEach((hostel) => {
+                  $('#viewAllHostels').append(`
               <li class="list-group-item">
               <div class="row">
                       <div class="col">
@@ -208,109 +223,20 @@ $(function () {
                     </div>
               </li>
             `)
-          })
+                })
 
-          // $('.applyHostelBtn').click((e) => {
-          //   // TODO: Write logic
-          //   let name = e.currentTarget.getAttribute('data-name')
-          //   let capacity = e.currentTarget.getAttribute('data-capacity')
-          //   let hid = e.currentTarget.getAttribute('data-id')
-          //
-          //   $.get(`/api/hostel/details/${hid}`)
-          //     .done((data) => {
-          //       if (data.success) {
-          //         console.log(data.data)
-          //         let rooms = data.data;
-          //
-          //
-          //         $('#noticeBoard').css('display', 'block').empty().append(
-          //           `
-          //     <div class="row no-gutters">
-          //       <div class="col">
-          //         <ul class="list-group">
-          //           <li class="list-group-item">Name</li>
-          //           <li class="list-group-item">Capacity</li>
-          //           <li class="list-group-item">Number of Vacant Rooms</li>
-          //         </ul>
-          //       </div>
-          //       <div class="col">
-          //         <ul id="listDetails" class="list-group">
-          //         <li class="list-group-item">${name}</li>
-          //         <li class="list-group-item">${capacity}</li>
-          //         <li id="noOfVacantRooms" class="list-group-item"></li>
-          //         </ul>
-          //       </div>
-          //     </div>
-          //   `).append(`
-          //     <div class="row no-gutters">
-          //       <div class="col">
-          //         <ul id="viewHostelRooms" class="list-group">
-          //           <li class="list-group-item">
-          //           <div class="row">
-          //             <div class="col">
-          //               <b>Room Number</b>
-          //             </div>
-          //             <div class="col">
-          //               <b>Floor</b>
-          //             </div>
-          //             <div class="col">
-          //               <b>Vacancy</b>
-          //             </div>
-          //           </div>
-          //           </li>
-          //         </ul>
-          //       </div>
-          //     </div>
-          //   `)
-          //         let notVacantRooms = 0;
-          //         rooms.forEach((room) => {
-          //           if (!room.vacant) {
-          //             notVacantRooms++;
-          //           }
-          //           $('#viewHostelRooms').append(`
-          //             <li class="list-group-item">
-          //               <div class="row">
-          //             <div class="col">
-          //               ${room.roomno}
-          //             </div>
-          //             <div class="col">
-          //               ${room.floor}
-          //             </div>
-          //             <div class="col">
-          //               ${room.vacant}
-          //             </div>
-          //           </div>
-          //     </li>
-          //   `)
-          //         })
-          //
-          //         $('#noOfVacantRooms').append(`
-          //           ${capacity - notVacantRooms}
-          //         `);
-          //       } else {
-          //         console.log(12)
-          //         console.log(err)
-          //       }
-          //     })
-          //     .fail(() => {
-          //       console.log(21)
-          //       console.log(err)
-          //     })
-          //
-          // })
-
-          $('.viewDetails').click((e) => {
-            let name = e.currentTarget.getAttribute('data-name')
-            let capacity = e.currentTarget.getAttribute('data-capacity')
-            let hid = e.currentTarget.getAttribute('data-id')
-            $.get(`/api/hostel/details/${hid}`)
-              .done((data) => {
-                if (data.success) {
-                  let rooms = data.data;
+                $('.viewDetails').click((e) => {
+                  let name = e.currentTarget.getAttribute('data-name')
+                  let capacity = e.currentTarget.getAttribute('data-capacity')
+                  let hid = e.currentTarget.getAttribute('data-id')
+                  $.get(`/api/hostel/details/${hid}`)
+                    .done((data) => {
+                      if (data.success) {
+                        let rooms = data.data;
 
 
-                  $('#noticeBoard').css('display', 'block').empty().append(
-                    `
+                        $('#noticeBoard').css('display', 'block').empty().append(
+                          `
               <div class="row no-gutters">
                 <div class="col">
                   <ul class="list-group">
@@ -357,12 +283,12 @@ $(function () {
                 <div id="errorApply" class="text-center text-danger text-capitalize"></div>
               </div>
             `)
-                  let notVacantRooms = 0;
-                  rooms.forEach((room) => {
-                    if (!room.vacant) {
-                      notVacantRooms++;
-                    }
-                    $('#viewHostelRooms').append(`
+                        let notVacantRooms = 0;
+                        rooms.forEach((room) => {
+                          if (!room.vacant) {
+                            notVacantRooms++;
+                          }
+                          $('#viewHostelRooms').append(`
                       <li class="list-group-item">
                         <div class="row">
                       <div class="col-3">
@@ -380,60 +306,90 @@ $(function () {
                     </div>
               </li>
             `)
-                  })
+                        })
 
-                  $('#noOfVacantRooms').append(`
+                        $('#noOfVacantRooms').append(`
                     ${capacity - notVacantRooms}
                   `);
 
-                  $('#applyForHostelButton').click(() => {
-                    let $preferences = $('.roomPreference');
-                    let noOfPreferencesFilled = 0;
-                    let finalPreferences = {};
-                    $preferences.each((i, preference) => {
-                      let value = $(preference).val();
-                      if (value) {
-                        noOfPreferencesFilled++;
-                      }
-                      console.log(2)
-                      if (+value === 1) {
-                        finalPreferences[1] = $(preference).parent().attr('data-id')
-                      }
-                      if (+value === 2) {
-                        finalPreferences[2] = $(preference).parent().attr('data-id')
-                      }
-                      if (+value === 3) {
-                        finalPreferences[3] = $(preference).parent().attr('data-id')
+                        $('#applyForHostelButton').click(() => {
+                          let $preferences = $('.roomPreference');
+                          let noOfPreferencesFilled = 0;
+                          let finalPreferences = {
+                            "1": 0,
+                            "2": 0,
+                            "3": 0
+                          };
+                          $preferences.each((i, preference) => {
+                            let value = $(preference).val();
+                            if (+value === 1) {
+                              finalPreferences[1] = $(preference).parent().attr('data-id')
+                              noOfPreferencesFilled++;
+                            }
+                            if (+value === 2) {
+                              finalPreferences[2] = $(preference).parent().attr('data-id')
+                              noOfPreferencesFilled++;
+                            }
+                            if (+value === 3) {
+                              finalPreferences[3] = $(preference).parent().attr('data-id')
+                              noOfPreferencesFilled++;
+                            }
+                          })
+                          if (noOfPreferencesFilled < 1 || noOfPreferencesFilled > 3) {
+                            $('#errorApply').text("Please select Your Preferences");
+                            console.log(1)
+                            return;
+                          }
+                          console.log(finalPreferences)
+                          $.post('/api/application/add', {
+                            date: (new Date()).toJSON().split("T")[0],
+                            hid: hid,
+                            room1: finalPreferences[1],
+                            room2: finalPreferences[2],
+                            room3: finalPreferences[3]
+                          }).done((data) => {
+                            console.log(data)
+                            if (data.success) {
+                              $('#noticeBoard').css('display', 'block').empty().append(
+                                `
+              <div class="row no-gutters">
+                <div class="col text-success">
+                  Application Successfully Submitted                 
+                </div>
+              </div>
+            `)
+                            } else {
+                              console.log("Some error Apply")
+                            }
+                          }).fail((err) => {
+                            console.log(err);
+                          })
+                        })
+
+
+                      } else {
+                        console.log(12)
+                        console.log(err)
                       }
                     })
-                    if (noOfPreferencesFilled < 1 || noOfPreferencesFilled > 3) {
-                      $('#errorApply').text("Please select Your Preferences");
-                      console.log(1)
-                      return;
-                    }
-                    console.log(finalPreferences)
-                    $.post('/api/application')
-                  })
-
-
-                } else {
-                  console.log(12)
-                  console.log(err)
-                }
-              })
-              .fail(() => {
-                console.log(21)
-                console.log(err)
-              })
-          })
-        } else {
-          console.log("Some error View Hostel")
+                    .fail(() => {
+                      console.log(21)
+                      console.log(err)
+                    })
+                })
+              } else {
+                console.log("Some error View Hostel")
+              }
+            })
+            .fail((err) => {
+              console.log(2)
+              console.log(err)
+            })
         }
-      })
-      .fail((err) => {
-        console.log(2)
-        console.log(err)
-      })
+      }).fail(() => {
+
+    })
+
   })
 
 
@@ -564,12 +520,12 @@ $(function () {
 
     $('#viewFines').click(() => {
 
-        $.get('/api/fines/viewSelect')
-            .done((data) => {
-                if (data.success) {
-                    let fines = data.data;
-                    console.log(fines)
-                    $('#noticeBoard').empty().css('display', 'block').append(`
+    $.get('/api/fines/viewSelect')
+      .done((data) => {
+        if (data.success) {
+          let fines = data.data;
+          console.log(fines)
+          $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col">
                   <ul id="viewAllHostels" class="list-group">
@@ -598,8 +554,8 @@ $(function () {
                 </div>
               </div>
             `)
-                    fines.forEach((fines) => {
-                        $('#noticeBoard').append(`
+          fines.forEach((fines) => {
+            $('#noticeBoard').append(`
               <li class="list-group-item">
               <div class="row">
                       <div class="col">
@@ -616,22 +572,22 @@ $(function () {
                         ${fines.amount}
                       </div>
                       <div class="col">
-                        ${fines.paid?'Yes':'No'}
+                        ${fines.paid ? 'Yes' : 'No'}
                       </div>
                     </div>
               </li>
 
                       `)
-                    })
-                } else {
-                    console.log("Some error view inventory")
-                }
-            })
-            .fail((err) => {
-                console.log(2)
-                console.log(err)
-            })
-    })
+          })
+        } else {
+          console.log("Some error view inventory")
+        }
+      })
+      .fail((err) => {
+        console.log(2)
+        console.log(err)
+      })
+  })
 
 })
 

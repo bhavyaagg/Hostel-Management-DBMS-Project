@@ -13,6 +13,12 @@ const createTable = `
   );
 `
 
+const allotRoom = (roomno) => {
+  return `
+    UPDATE rooms SET vacant='No' WHERE roomno='${roomno}';
+  `
+}
+
 const insertIntoTable = (data) => {
   return `
     INSERT INTO rooms(roomno, floor, hid) values('${data.roomno}',${data.floor},${data.hid});
@@ -38,5 +44,6 @@ module.exports = {
   insertIntoTable,
   selectAll,
   dropTable,
-  getDetailsFromHid
+  getDetailsFromHid,
+  allotRoom
 }
