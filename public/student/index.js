@@ -160,24 +160,53 @@ $(function () {
   $('#apply').click(() => {
     $.get('/api/application/exists')
       .done((data) => {
-        if (data.success) {
+        console.log(data)
+        if (data.data && data.data.length > 1) {
+          data.data[0] = data.data[data.data.length - 1];
+        }
+        if (data.success && data.data[0].status !== "REJECTED") {
           $.get(`/api/hostel/details/${data.data[0].hid}`)
             .done((hostelData) => {
               console.log(hostelData)
-              $('#noticeBoard').css('display', 'block').empty().append(`
-            <div class="row">
-              <div class="col">
-                You have already applied for Hostel ${hostelData.hostelData[0].name}  
-              </div>
-            </div>
-          `)
+              if (data.data[0].status = "ALLOTTED") {
+                $.get('/api/rooms/getAllottedRoom').done((allottedData) => {
+                  if (allottedData.success) {
+                    $('#noticeBoard').css('display', 'block').empty().append(`
+                      <div class="row">
+                        <div class="col">
+                          Your previous application for hostel ${hostelData.hostelData[0].name} has been accepted.<br/>
+                          Allotted Room: ${allottedData.data[0].roomno}
+                        </div>
+                      </div>
+                    `)
+                  }
+                })
+              } else {
+                $('#noticeBoard').css('display', 'block').empty().append(`
+                  <div class="row">
+                    <div class="col">
+                      You have already applied for the Hostel ${hostelData.hostelData[0].name}
+                    </div>
+                  </div>
+                    `)
+              }
             })
         } else {
+          if (data.data[0].status === "REJECTED") {
+            console.log("nbsdkjasn")
+            $('#noticeBoard').prepend(`
+              <div class="row mb-3">
+              <div class="col-12 text-danger">
+                Your previous application was rejected.
+              </div>
+              </div>
+            `)
+          }
           $.get('/api/hostel/viewAll')
             .done((data) => {
               if (data.success) {
                 let hostels = data.data;
-                $('#noticeBoard').empty().css('display', 'block').append(`
+                $('#noticeBoard').css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col">
                   <ul id="viewAllHostels" class="list-group">
@@ -300,8 +329,8 @@ $(function () {
                       <div class="col-3">
                         ${room.vacant}
                       </div> 
-                      <div data-id="${room.roomno}" class="form-group col-4">
-                        <input placeholder="Eg 1, 2 or 3" class="form-control input roomPreference">
+                      <div  data-id="${room.roomno}" class="form-group col-4">
+                        <input ${!room.vacant ? "disabled='true'" : ""} placeholder="Eg 1, 2 or 3" class="form-control input roomPreference">
                       </div>
                     </div>
               </li>
@@ -463,13 +492,13 @@ $(function () {
       })
   })
 
-    $('#showAttendance').click(() => {
-        $.get('/api/attendance/viewOne')
-            .done((data) => {
-                if (data.success && data.data.length !== 0) {
-                    let attendance = data.data;
-                    console.log(attendance)
-                    $('#noticeBoard').empty().css('display', 'block').append(`
+  $('#showAttendance').click(() => {
+    $.get('/api/attendance/viewOne')
+      .done((data) => {
+        if (data.success && data.data.length !== 0) {
+          let attendance = data.data;
+          console.log(attendance)
+          $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col">
                   <ul id="viewAllHostels" class="list-group">
@@ -488,7 +517,7 @@ $(function () {
               </div>
             `)
 
-                        $('#noticeBoard').append(`
+          $('#noticeBoard').append(`
               <li class="list-group-item">
               <div class="row">
                       <div class="col">
@@ -502,23 +531,23 @@ $(function () {
                         
                       `)
 
-                } else {
-                    $('#noticeBoard').empty().css('display', 'block').append(`
+        } else {
+          $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col text-capitalize text-danger">
                   No Attendance Details
                 </div>
               </div>
             `)
-                }
-            })
-            .fail((err) => {
-                console.log(2)
-                console.log(err)
-            })
-    })
+        }
+      })
+      .fail((err) => {
+        console.log(2)
+        console.log(err)
+      })
+  })
 
-    $('#viewFines').click(() => {
+  $('#viewFines').click(() => {
 
     $.get('/api/fines/viewSelect')
       .done((data) => {

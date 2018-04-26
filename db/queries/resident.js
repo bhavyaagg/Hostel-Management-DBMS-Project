@@ -25,6 +25,13 @@ const insertIntoTable = (resident) => {
 }
 
 
+const getAllottedRoom = (rollno) => {
+  return `
+    SELECT * FROM resident WHERE rollno='${rollno}';
+  `
+}
+
+
 const dropTable = `
   DROP TABLE IF EXISTS resident;
 `
@@ -34,5 +41,5 @@ module.exports = {
   createTable,
   dropTable,
   insertIntoTable,
-
+  getAllottedRoom
 }
