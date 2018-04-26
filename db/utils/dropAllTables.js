@@ -18,11 +18,12 @@ db.query(queries.hostel.dropTable).then((data) => {
                   console.log("All tables dropped");
                   process.exit();
                 })
+
               })
             })
           })
         })
-      })
+      });
     })
   })
 });

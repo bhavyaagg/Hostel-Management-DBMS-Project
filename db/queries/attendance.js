@@ -12,27 +12,27 @@ const createTable = `
 `
 
 const addAttendance = (rollno) => {
-    return `
+  return `
     UPDATE attendance SET totalPresent=totalPresent+1 , totalDays = totalDays + 1 where rollno='${rollno}'
     `
 }
 
 const absent = (rollno) => {
-    return `
+  return `
     UPDATE attendance SET totalDays = totalDays + 1 where rollno='${rollno}'
     `
 }
 
-const selectOne = (rollno)=>{
-    return `SELECT * from attendance where rollno='${rollno}'`
+const selectOne = (rollno) => {
+  return `SELECT * from attendance where rollno='${rollno}'`
 }
 
-const viewByHid=(hid)=>{
-    return `SELECT totalPresent,totalDays,attendance.rollno as rno,roomno from attendance,resident where attendance.rollno=resident.rollno AND hid=${hid}`
+const viewByHid = (hid) => {
+  return `SELECT totalPresent,totalDays,attendance.rollno as rno,roomno from attendance,resident where attendance.rollno=resident.rollno AND hid=${hid}`
 }
 
 const checkAttendance = (rollno) => {
-    return `
+  return `
    BEGIN
    IF NOT EXISTS (SELECT * FROM attendance where
                     rollno='${rollno}'
@@ -56,12 +56,12 @@ const dropTable = `
 `
 
 module.exports = {
-    createTable,
-    selectAll,
-    dropTable,
-    checkAttendance,
-    addAttendance,
-    selectOne,
-    viewByHid,
-    absent
+  createTable,
+  selectAll,
+  dropTable,
+  checkAttendance,
+  addAttendance,
+  selectOne,
+  viewByHid,
+  absent
 }
