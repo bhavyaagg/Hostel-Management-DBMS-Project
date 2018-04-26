@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "createAllTables": "node db/utils/createAllTables",
     "dropAllTables": "node db/utils/dropAllTables",
+    "triggers": "node db/utils/triggers",
     "start": "npm run createAllTables & node server.js",
-    "restart": "npm run dropAllTables && npm run createAllTables && FORCE=true node server.js"
+    "restart": "npm run dropAllTables && npm run createAllTables && npm run triggers && FORCE=true node server.js"
   },
   "author": "Bhavya Aggarwal <bhavyaaggarwal1209@gmail.com>",
   "license": "ISC",
