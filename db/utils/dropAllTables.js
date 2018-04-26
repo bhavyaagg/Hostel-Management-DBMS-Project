@@ -7,7 +7,6 @@ const queries = require('../queries');
 
 db.query(queries.hostel.dropTable).then((data) => {
   db.query(queries.application.dropTable).then((data) => {
-    db.query(queries.staff.dropTable).then((data) => {
       db.query(queries.rooms.dropTable).then((data) => {
         db.query(queries.wardens.dropTable).then(() => {
           db.query(queries.inventory.dropTable).then((data) => {
@@ -22,7 +21,6 @@ db.query(queries.hostel.dropTable).then((data) => {
             })
           })
         })
-      })
     })
   })
 });

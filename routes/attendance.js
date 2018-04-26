@@ -9,18 +9,21 @@ const attendanceQueries = require('../db/queries/attendance');
 const utils = require('../utils');
 
 route.post('/add', function (req, res) {
-    db.query(attendanceQueries.addAttendance(req.body.rno)).then((data) => {
-
+    db.query(attendanceQueries.checkAttendance(req.body.rno)).then((data) => {
+        db.query(attendanceQueries.addAttendance(req.body.rno)).then((data) => {
+        }).catch(utils.errorFunction(req, res))
         res.send({
             success: true
         });
     }).catch(utils.errorFunction(req, res))
 
 })
+
 route.post('/absent', function (req, res) {
 
-    db.query(attendanceQueries.absent(req.body.rno)).then((data) => {
-
+    db.query(attendanceQueries.checkAttendance(req.body.rno)).then((data) => {
+        db.query(attendanceQueries.absent(req.body.rno)).then((data) => {
+        }).catch(utils.errorFunction(req, res))
         res.send({
             success: true
         });

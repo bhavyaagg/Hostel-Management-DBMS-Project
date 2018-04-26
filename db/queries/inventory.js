@@ -13,7 +13,7 @@ const createTable = `
 `
 
 
-const insertIntoTable = (name, hid, qtye) => {
+const insertIntoTable = (name, hid, qty) => {
 
     return `
     INSERT INTO inventory(name,hid,qty) values('${name}', ${hid}, ${qty});

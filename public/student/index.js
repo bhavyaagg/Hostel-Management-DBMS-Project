@@ -192,7 +192,8 @@ $(function () {
               }
             })
         } else {
-          if (data.data[0].status === "REJECTED") {
+            console.log(data.data);
+          if (data.data && data.data[0] && data.data[0].status === "REJECTED") {
             console.log("nbsdkjasn")
             $('#noticeBoard').prepend(`
               <div class="row mb-3">
