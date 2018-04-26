@@ -38,12 +38,14 @@ route.post('/allot', (req, res) => {
       error: "Cant Allot Since No Room Defined"
     })
   }
-  db.query(applicationQueries.allotApplication(req.body.aid)).then(() => {
-    db.query(roomQueries.allotRoom(req.body.pref)).then(() => {
-      req.body.roomno = req.body.pref;
-      db.query(residentQueries.insertIntoTable(req.body)).then(() => {
-        res.send({
-          success: true
+  db.query(`INSERT INTO attendance values('${req.body.rollno}',0,0)`).then(() => {
+    db.query(applicationQueries.allotApplication(req.body.aid)).then(() => {
+      db.query(roomQueries.allotRoom(req.body.pref)).then(() => {
+        req.body.roomno = req.body.pref;
+        db.query(residentQueries.insertIntoTable(req.body)).then(() => {
+          res.send({
+            success: true
+          })
         })
       })
     })

@@ -150,6 +150,7 @@ $(document).ready(() => {
                       aid
                     }).done((data) => {
                       console.log(data)
+                      window.location.reload();
                     }).fail((err) => {
                       console.log(err);
                     })
@@ -644,7 +645,7 @@ $(document).ready(() => {
                         ${attendance.rno}
                       </div>
                       <div class="col">
-                        ${attendance.roomnumber}
+                        ${attendance.roomno}
                       </div>
 
                       <div class="col">

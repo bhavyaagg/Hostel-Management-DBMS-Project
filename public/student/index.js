@@ -168,7 +168,7 @@ $(function () {
           $.get(`/api/hostel/details/${data.data[0].hid}`)
             .done((hostelData) => {
               console.log(hostelData)
-              if (data.data[0].status = "ALLOTTED") {
+              if (data.data[0].status === "ALLOTTED") {
                 $.get('/api/rooms/getAllottedRoom').done((allottedData) => {
                   if (allottedData.success) {
                     $('#noticeBoard').css('display', 'block').empty().append(`

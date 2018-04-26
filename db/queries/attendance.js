@@ -32,16 +32,9 @@ const viewByHid = (hid) => {
 }
 
 const checkAttendance = (rollno) => {
-  return `
-   BEGIN
-   IF NOT EXISTS (SELECT * FROM attendance where
-                    rollno='${rollno}'
-                   )
-   BEGIN
+  return `   
        INSERT INTO attendance 
        VALUES ('${rollno}', '0', '0')
-   END
-   END
    `
 }
 
