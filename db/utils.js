@@ -17,6 +17,8 @@ const createFunction = function (triggerName, tableName, columnName, min, max, e
       IF NEW.${columnName} < ${min} OR NEW.${columnName} > ${max} then 
         RAISE EXCEPTION '${columnName} not in range.';
       END IF;
+      
+      RETURN NEW;
     END;
     $${triggerName}$ LANGUAGE plpgsql;
   `

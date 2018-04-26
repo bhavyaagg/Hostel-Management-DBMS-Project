@@ -186,6 +186,90 @@ $(document).ready(() => {
     })
   })
 
+  $('#listRoomStats').click(() => {
+    let hid = localStorage.getItem("hid")
+    if (!hid) {
+      console.log("No HID in LS");
+      return;
+    }
+
+    $.get(`/api/hostel/details/${hid}`)
+      .done((hostelData) => {
+        let rooms = hostelData.data;
+        let roomsDict = {};
+        rooms.forEach((room) => {
+          roomsDict[room.roomno] = room.vacant;
+        })
+
+        $('#noticeBoard').empty().css('display', 'block').append(`
+              <div class="row no-gutters">
+              <div class="col-12">
+                <button id="addRoom" class="btn btn-success">
+                  Add Room
+                </button>
+                <div id="roomInfo" style="display: none;">
+                  <input placeholder="Room Number" id="roomno">
+                  <input placeholder="Floor" id="floor">
+                  <button id="submitRoom" class="btn btn-success">Submit</button>
+                </div>
+              </div>
+                <div class="col-12">
+                  <ul id="viewAllRooms" class="list-group">
+                    <li class="list-group-item">
+                    <div class="row text-center">
+                      <div class="col">
+                        <b>Room Number</b>
+                      </div>
+                      <div class="col">
+                      <b>Floor</b>
+                      </div>
+                      <div class="col">
+                      <b>Vacant</b>
+                      </div>
+                     
+                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            `)
+
+
+        $('#addRoom').click(() => {
+          $('#roomInfo').css('display', 'block');
+          $('#submitRoom').off().click(() => {
+            $.post('/api/rooms/add', {
+              roomno: $('#roomno').val(),
+              floor: $('#floor').val(),
+              hid: hid
+            }).done(() => {
+              window.location.reload();
+            })
+          })
+        })
+
+        rooms.forEach((room) => {
+          $('#viewAllRooms').append(`
+                      <li class="list-group-item">
+                        <div class="row text-center">
+                      <div class="col">
+                        ${room.roomno}
+                      </div>
+                      <div class="col">
+                        ${room.floor}
+                      </div> 
+                      <div class="col">
+                        ${room.vacant}
+                      </div> 
+                    </div>
+              </li>
+            `)
+        })
+
+      })
+
+  })
+
   $('#loginButton').click(() => {
 
     let username = $('#loginUsername').val();
