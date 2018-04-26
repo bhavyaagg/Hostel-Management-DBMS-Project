@@ -16,6 +16,14 @@ route.post('/add', function (req, res) {
         });
     }).catch(utils.errorFunction(req, res))
 })
+route.post('/absent', function (req, res) {
+    db.query(attendanceQueries.absent(req.body.rno)).then((data) => {
+
+        res.send({
+            success: true
+        });
+    }).catch(utils.errorFunction(req, res))
+})
 
 
 route.get('/viewAll', (req, res) => {

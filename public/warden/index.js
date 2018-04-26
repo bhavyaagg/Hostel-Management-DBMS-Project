@@ -517,10 +517,10 @@ $(document).ready(() => {
     hid = localStorage.getItem('hid');
     $.post('/api/attendance/viewByHid', {hid})
       .done((data) => {
-        if (data.success) {
-          let attendance = data.data;
-          console.log(attendance)
-          $('#noticeBoard').empty().css('display', 'block').append(`
+          if (data.success) {
+            let attendance = data.data;
+            console.log(attendance)
+            $('#noticeBoard').empty().css('display', 'block').append(`
               <div class="row no-gutters">
                 <div class="col">
                   <ul id="viewAllHostels" class="list-group">
@@ -550,10 +550,10 @@ $(document).ready(() => {
               </div>
             `)
 
-          dat = {}
-          attendance.forEach((attendance, idx) => {
+            dat = {}
+            attendance.forEach((attendance, idx) => {
 
-            $('#noticeBoard').append(`
+              $('#noticeBoard').append(`
               <li class="list-group-item">
               <div class="row">
                       <div class="col">
@@ -576,41 +576,61 @@ $(document).ready(() => {
               </li>
 
                       `)
-          })
-
-          $('#noticeBoard').append(`<button id="markAttendance" class="btn btn-info">Submit</button>`)
-
-          $('#markAttendance').click(() => {
-
-            attendance.forEach((attendance, idx) => {
-              rno = attendance.rno
-              if ($('#cb' + idx).checked) {
-                $.post("/api/attendance/add", {rno}).done(function (hostel) {
-                  if (hostel.success) {
-                    $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
-                  } else {
-                    console.log(2)
-                    console.log(hostel.error);
-                    $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
-                  }
-                }).fail(function (hostel) {
-                  console.log(hostel.responseJSON)
-                  if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
-                    $('#errorAddFine').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
-                  } else {
-                    $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Hostel2")
-                  }
-                });
-              }
             })
-            $('#noticeBoard').empty();
 
-          })
+            $('#noticeBoard').append(`<button id="markAttendance" class="btn btn-info">Submit</button>`)
 
-        } else {
-          console.log("Some error view inventory")
+            $('#markAttendance').click(() => {
+
+              attendance.forEach((attendance, idx) => {
+                rno = attendance.rno
+                if ($('#cb' + idx).is(":checked")) {
+                  $.post("/api/attendance/add", {rno}).done(function (hostel) {
+                    if (hostel.success) {
+                      $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
+                    } else {
+                      console.log(2)
+                      console.log(hostel.error);
+                      $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
+                    }
+                  }).fail(function (hostel) {
+                    console.log(hostel.responseJSON)
+                    if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                      $('#errorAddFine').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
+                    } else {
+                      $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Hostel2")
+                    }
+                  });
+                }
+                else {
+                  console.log('absent');
+                  $.post("/api/attendance/absent", {rno}).done(function (hostel) {
+                    if (hostel.success) {
+                      $('#errorAddFine').removeClass('text-danger').addClass('text-success').text("Fine Added");
+                    } else {
+                      console.log(2)
+                      console.log(hostel.error);
+                      $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Fine")
+                    }
+                  }).fail(function (hostel) {
+                    console.log(hostel.responseJSON)
+                    if (hostel.responseJSON.error.name === 'SequelizeUniqueConstraintError') {
+                      $('#errorAddFine').text(`${hostel.responseJSON.error.errors[0].type}! ${hostel.responseJSON.error.errors[0].message}`)
+                    } else {
+                      $('#errorAddFine').addClass("text-danger").removeClass('text-success').text("Some Error Add Hostel2")
+                    }
+                  });
+                }
+              })
+              $('#noticeBoard').empty();
+
+            })
+          }
+          else {
+            console.log("Some error view inventory")
+          }
         }
-      })
+      )
       .fail((err) => {
         console.log(2)
         console.log(err)
