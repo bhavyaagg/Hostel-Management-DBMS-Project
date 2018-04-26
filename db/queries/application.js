@@ -9,7 +9,7 @@ const createTable = `
     status varchar(20) DEFAULT 'WAITLISTED',
     rollno varchar(7),
     hid int,
-    roomPreference1 int,
+    roomPreference1 int NULL,
     roomPreference2 int NULL,
     roomPreference3 int NULL,
     PRIMARY KEY (aid),

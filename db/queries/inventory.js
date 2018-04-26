@@ -7,7 +7,7 @@ const createTable = `
     emid SERIAL PRIMARY KEY,
     hid int,
     name varchar(30),
-    qty int check(qty>0),
+    qty int,
     FOREIGN KEY (hid) REFERENCES hostel(hid)
   );
 `
