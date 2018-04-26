@@ -28,7 +28,7 @@ const selectOne = (rollno)=>{
 }
 
 const viewByHid=(hid)=>{
-    return `SELECT totalPresent,totalDays,attendance.rollno as rno,roomNumber from attendance,resident where attendance.rollno=resident.rno AND hid=${hid}`
+    return `SELECT totalPresent,totalDays,attendance.rollno as rno,roomno from attendance,resident where attendance.rollno=resident.rollno AND hid=${hid}`
 }
 
 const checkAttendance = (rollno) => {

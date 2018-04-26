@@ -56,7 +56,7 @@ const selectAll = `
 `
 
 const dropTable = `
-  DROP TABLE IF EXISTS student;
+  DROP TABLE IF EXISTS student CASCADE;
 `
 
 module.exports = {
