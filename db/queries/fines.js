@@ -7,7 +7,7 @@ const createTable = `
     fid SERIAL PRIMARY KEY,
     rollno varchar(7),
     remark varchar(30) NOT NULL,
-    amount int check(amount>=0),
+    amount int,
     paid boolean,
     Foreign Key(rollno) references student(rollno)
   );
