@@ -35,7 +35,7 @@ $(document).ready(() => {
       return;
     }
 
-    if (!rollno || rollno.length <= 6 || rollno.length > 7) {
+    if (!rollno) {
       $('#errorRegister').text("Incorrect Roll Number");
       return;
     }

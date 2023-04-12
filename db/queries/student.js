@@ -22,7 +22,7 @@ const insertIntoTable = (applicant) => {
       '${applicant.name}',
       '${applicant.email}',
       '${applicant.contact}',
-      '${applicant.addrecoadiss}',
+      '${applicant.address}',
       '${applicant.pincode}',
       '${applicant.outsideDelhi}',
       '${applicant.pwd}'
