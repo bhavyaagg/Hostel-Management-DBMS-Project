@@ -21,7 +21,9 @@ psql
 create database hosteldb;
 create user hosteluser with encrypted password 'hostelpass';
 grant all privileges on database hosteldb to hosteluser;
-```
+grant all on SCHEMA public to hosteluser;
+grant usage on SCHEMA public to hosteluser;
+
 > To login as the hosteluser
 
 ```bash
